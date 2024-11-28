@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        karla: ['var(--font-karla)']
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
