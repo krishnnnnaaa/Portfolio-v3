@@ -6,7 +6,7 @@ import TopTweets from "@/components/TopTweets";
 
 export default function Home() {
   return (
-    <div className="bg-[#010a15]">
+    <div className="bg-[#010a15] text-white">
       <Navbar/>
       <Hero/>
       <Skills/>

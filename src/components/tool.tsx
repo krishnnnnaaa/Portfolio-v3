@@ -24,7 +24,7 @@ export default function Tool({
         />
       </div>
       <div className="mb-8">
-        <p className="text-lg cursor-pointer">{techName}</p>
+        <p className="text-lg cursor-pointer select-none">{techName}</p>
       </div>
     </div>
   );
