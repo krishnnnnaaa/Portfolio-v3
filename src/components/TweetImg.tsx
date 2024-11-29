@@ -7,7 +7,7 @@ export default function TweetImg({tweet}:{tweet:StaticImageData}){
        <Image
           src={tweet}
           alt='tweet'
-          className="w-[500px] h-auto m-4"/>
+          className="w-[300px] md:w-[500px] h-auto m-4"/>
     </div>
   )
 }

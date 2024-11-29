@@ -8,7 +8,7 @@ export default function Tool({
   techName: string;
 }) {
   return (
-    <div className="bg-[#1212129c] hover:scale-110 transition-all w-48 flex rounded-xl flex-col mb-8 justify-center items-center">
+    <div className="bg-[#1212129c] hover:scale-110 transition-all w-40 md:w-48 flex rounded-xl flex-col mb-8 justify-center items-center">
       <div
         className={`${techName == "Tailwind" ? "h-16" : "h-24"} ${
           techName == "Bootstrap" && "h-20"

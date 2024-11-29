@@ -10,9 +10,9 @@ export default function ProofOfWork(){
         setProofOfWork(proofs)
     }, [])
   return (
-    <div className='flex justify-center items-center flex-col'>
+    <div className='flex justify-center items-center pb-8 flex-col'>
         <div>
-        <h1 className='text-center text-4xl text-fuchsia-600 my-8'>Proof of Work</h1>
+        <h1 className='text-center text-4xl text-orange-300 my-8'>Proof of Work</h1>
         </div>
         <div className='w-full flex-wrap justify-center flex '>
         {

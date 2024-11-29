@@ -12,7 +12,7 @@ const TopTweets = () => {
   return (
     <div className='flex justify-center items-center my-8'>
         <div>
-            <h1 className='text-center text-4xl text-fuchsia-600 my-8'>Top Tweets by me :p</h1>
+            <h1 className='text-center text-4xl text-orange-300 my-8'>Top Tweets by me :p</h1>
             <div className='flex justify-center flex-wrap'>
                 {
                     tweetData && tweetData.map(tweet => <TweetImg tweet={tweet.image} key={tweet.id}/>)

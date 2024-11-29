@@ -6,13 +6,13 @@ import { MdOutlineAlternateEmail,  } from 'react-icons/md'
 export default function Intro(){
   return (
     <div>
-        <span className='text-8xl my-4'>Krishna.</span>
-        <ul className='text-2xl'>
-            <li className='my-4'>Frontend Developer.</li>
-            <li className='my-4'>Converting <span className='text-fuchsia-600'>404</span> into <span className='text-fuchsia-600'>hello world</span> </li>
+        <span className='text-7xl md:text-8xl hover:text-7xl transition-all my-4'>Krishna.</span>
+        <ul className='text-xl md:text-2xl'>
+            <li className='my-2 md:my-4'>Frontend Developer.</li>
+            <li className='my-2 md:my-4'>Converting <span className='text-fuchsia-600'>404</span> into <span className='text-fuchsia-600'>hello world</span> </li>
         </ul>
         <div>
-            <ul className='flex space-x-4 text-2xl'>
+            <ul className='flex md:space-x-4 space-x-1 mt-8 md:mt-0 text-2xl'>
         <Link className='text-cyan-600 hover:scale-110 px-4 py-2 rounded-full' href={'/'}><li></li><BsTwitter/></Link>
             <Link className='text-cyan-600 hover:scale-110 px-4 py-2 rounded-full' href={'/'}><li><BsGithub/></li></Link>
             <Link className='text-cyan-600 hover:scale-110 px-4 py-2 rounded-full' href={'/'}><li><BsLinkedin/></li></Link>

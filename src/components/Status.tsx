@@ -4,7 +4,9 @@ import next from '../assets/code/nextjs.png'
 
 export default function Status(){
   return (
-    <div className='flex space-x-4 items-center'> 
+    <div className='flex space-y-4 flex-col items-start'> 
+    <div className='text-2xl text-orange-300'>Status</div>
+    <div className='flex space-x-4 md:ml-0 ml-4'>
         <div>
             <Image src={next} alt='next' height={80} width={80}/>
         </div>
@@ -13,6 +15,7 @@ export default function Status(){
            <span className='font-semibold'>Elapsed: 02:30</span>
            <span className='text-lg'>Tool: VS Code • <span className='text-cyan-600'>07:36 PM</span></span>
         </div>
+    </div>
     </div>
   )
 }

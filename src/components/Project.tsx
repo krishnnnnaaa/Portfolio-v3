@@ -7,7 +7,7 @@ import { LuCode2  } from "react-icons/lu";
 
 const Project = ({repoName, repoDesc, tech, demo, github =''}: {repoName:string, repoDesc:string, tech:string, demo:string, github: string}) => {
   return (
-    <div className='border-2 hover:scale-105 transition-all bg-[#00132e] border-cyan-600 rounded-lg p-4 w-[500px] m-4'>
+    <div className='border-2 select-none cursor-pointer hover:scale-105 transition-all bg-[#00132e] border-cyan-600 rounded-lg p-4 w-[500px] m-4'>
         <div className='flex justify-between mb-4'>
             <div className='flex'>
                 <div>
