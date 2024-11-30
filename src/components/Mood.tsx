@@ -1,7 +1,7 @@
 'use client'
 import { mood, moodType } from '@/app/mood'
 import { useStatus } from '@/features/appState'
-import { Loader2Icon, LoaderCircle } from 'lucide-react'
+import { Loader2Icon } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
