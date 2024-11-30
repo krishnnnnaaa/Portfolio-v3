@@ -1,7 +1,7 @@
 import React from 'react'
 import user from '../user/me.jpg'
 import Image from 'next/image'
-import { DiGithub, DiGithubBadge } from 'react-icons/di'
+import { DiGithubBadge } from 'react-icons/di'
 import Link from 'next/link'
 import { LuCode2  } from "react-icons/lu";
 

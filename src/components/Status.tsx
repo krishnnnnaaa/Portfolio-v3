@@ -17,6 +17,8 @@ export default function Status({id, tool, time, title}: {id: string, tool:string
       if (newCount === 3) {
         setTimeout(() => {
           router.push('/manage')
+          console.log(clickCount);
+          
         }, 2000);
         return 0; 
       }

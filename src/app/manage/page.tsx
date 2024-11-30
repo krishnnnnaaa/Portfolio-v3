@@ -11,7 +11,7 @@ import ToolSet from '@/components/ToolSet'
 import { useStatus } from '@/features/appState'
 import status from '@/appwrite/status'
 
-export default  function page() {
+export default  function Manage() {
   const { id, time, title, tool } = useStatus()
   const handleStatusEvent = ()=> {
     status.saveDocument({id, time, title, tool})
