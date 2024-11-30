@@ -7,33 +7,33 @@ import music from '../assets/activity/music.avif'
 import study from '../assets/activity/study.jpg'
 
 export interface moodType{
-    id: number,
+    id: string,
     image: StaticImageData,
 }
 
 export const mood:moodType[] = [
     {
-        id: 1,
+        id: '1',
         image: chill
     },
     {
-        id: 2,
+        id: '2',
         image: cat
     },
     {
-        id: 3,
+        id: '3',
         image: coding
     },
     {
-        id: 4,
+        id: '4',
         image: study
     },
     {
-        id: 5,
+        id: '5',
         image: mask
     },
     {
-        id: 6,
+        id: '6',
         image: music
     },
 ]

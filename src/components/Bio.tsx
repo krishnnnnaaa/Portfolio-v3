@@ -6,7 +6,7 @@ export default function Bio(){
   return (
     <div className='w-[90%] md:w-[450px] select-none space-y-4'>
         <div>
-            <Image className='animate-pulse md:block hidden' src={me} alt='me' width={400}  height={600}/>
+            <Image className='md:block hidden' src={me} alt='me' width={400}  height={600}/>
         </div>
         <div className='md:text-2xl w-fit md:hidden block text-2xl text-orange-300'>Bio</div>
         <div className='text-lg md:text-xl font-semibold'>
