@@ -23,7 +23,7 @@ export default  function Manage() {
     setisSubmmited(false)
   }
   return (
-    <div className='bg-[#010a15] -mt-8 text-white min-h-screen items-center flex flex-col justify-center'>
+    <div className='bg-[#010a15] pt-8 -mt-8 text-white min-h-screen items-center flex flex-col justify-center'>
       <span className='text-4xl mb-8 text-orange-300 select-none hover:scale-110 transition-all'>Manage Status</span>
       <div className='items-start flex flex-col px-8'>
         <span className='select-none'>Preview</span>
@@ -41,7 +41,7 @@ export default  function Manage() {
           isSubmmited ? <LoaderCircle className='animate-spin'/> : "Save changes"
         }
       </Button>
-      <Button onClick={()=> router.push('/')}>Go Back</Button>
+      <Button onClick={()=> router.push('/')} className='my-4'>Go Back</Button>
       </div>
       </div>
     </div>

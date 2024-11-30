@@ -62,7 +62,7 @@ export default function Status({id, tool, time, title}: {id: string, tool:string
   return (
     <div className='flex space-y-4 flex-col items-start'> 
     <div className='text-2xl text-orange-300 select-none hover:scale-110 transition-all'>Status</div>
-    <div className='flex space-x-4 md:ml-0 ml-4'>
+    <div className='flex space-x-4 md:ml-0 items-center'>
         <div>
             <Image src={item?.image as StaticImageData} alt='next' onClick={handleClick} className='hover:scale-110 transition-all' height={80} width={80}/>
         </div>
@@ -73,7 +73,7 @@ export default function Status({id, tool, time, title}: {id: string, tool:string
           <div className='flex flex-col text-white'>
            <span className='text-xl text-fuchsia-600 font-semibold select-none hover:scale-110 transition-all'>{title}</span>
            <span className='font-semibold select-none hover:scale-110 transition-all'>Elapsed: {elapsedTime?.hours} hours and {elapsedTime?.minutes} minutes</span>
-           <div className='flex space-x-2'>
+           <div className='flex space-x-2 items-baseline'>
            <span className='text-lg select-none hover:scale-110 transition-all'>Tool: {tool}</span>
            <span className='select-none hover:scale-110 transition-all'>•</span>
            <span className='text-cyan-600 select-none hover:scale-110 transition-all'>{currentTime}</span>
