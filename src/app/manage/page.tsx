@@ -184,7 +184,7 @@ export default function Manage() {
             <span className="select-none">Preview</span>
             <Status id={id} time={time} title={title} tool={tool} key={id} />
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center w-full">
             {isSpotifyPlaying && inspectSpotify && currentlyPlaying != null ? (
               <Spotify
                 album={trackInfo.album as string}
@@ -200,7 +200,7 @@ export default function Manage() {
               ""
             )}
             {currentlyPlaying == undefined && !isSpotifyPlaying && (
-              <Alert className="bg-green-500 border-green-500 w-[400px] text-white">
+              <Alert className="bg-green-500 border-green-500 w-full md:w-[400px] text-white">
                 <AlertTriangle className="h-4 w-4" color="white" />
                 <AlertTitle>Alert!</AlertTitle>
                 <AlertDescription>No music is playing here.</AlertDescription>
@@ -214,7 +214,7 @@ export default function Manage() {
         />
         <div className="flex flex-col space-y-8">
           <Mood />
-          <div className="flex justify-between md:space-x-0 space-x-2">
+          <div className="flex flex-col md:space-y-0 space-y-4 justify-between space-x-0">
             <Title />
             <ToolSet />
             <Time />

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Intro from "./Intro";
 import Bio from "./Bio";
 import Status from "./Status";
@@ -38,9 +38,14 @@ export interface SpotifyDocumentType {
 
 export default function Hero() {
   const { setId, setTime, setTitle, setTool, id, time, title, tool, trackInfo } = useStatus();
-  const [statusState, setStatusState] = useState<StatusDocumentType>();
   useEffect(() => {
-    status.getDoc().then((res) => setStatusState(res as StatusDocumentType));
+    status.getDoc().then(res => {
+      setId(res?.id);
+      setTime(res?.time);
+      setTitle(res?.title);
+      setTool(res?.tool);
+    });
+    
     spotifyPlay.getSpotifyDoc().then((res)=> {
       trackInfo.setTrack(res?.track)
       trackInfo.setArtists(res?.artists)
@@ -50,12 +55,6 @@ export default function Hero() {
           trackInfo.setTrackUrl(res?.trackUrl)
           trackInfo.setAlbum(res?.album)
     })
-    if(statusState){
-      setId(statusState.id);
-      setTime(statusState.time);
-      setTitle(statusState.title);
-      setTool(statusState.tool);
-    }
 
   }, []);
 
@@ -65,7 +64,7 @@ export default function Hero() {
       <div className="flex flex-col space-y-12">
         <Intro />
         <Status id={id} time={time} title={title} tool={tool} />
-        <div className="w-[90%]">
+        <div className="w-full md:w-[90%]">
       {
         trackInfo.toggleSpotifyPlay &&
         <Spotify album={trackInfo.album as string} artists={trackInfo.artists as string[]} date={trackInfo.trackDate as string} img={trackInfo.trackImg as string} track={trackInfo?.track as string} trackUrl={trackInfo.trackUrl as string} key={trackInfo?.track} trackType={trackInfo.trackType as string}/>
