@@ -65,6 +65,9 @@ export default function Manage() {
         })
       );
       setInspectSpotify(true);
+    }else {
+      setInspectSpotify(false);
+      return null;
     }
 
     return accessToken;
@@ -101,7 +104,12 @@ export default function Manage() {
   // extract token and fetch Currently-playing-music on every render
   useEffect(() => {
     const accessToken = extractAccessToken();
-    fetchCurrentlyPlayingMusic(accessToken);
+    if(accessToken !=null){
+      fetchCurrentlyPlayingMusic(accessToken);
+    }else{
+      setCurrentlyPlaying(undefined);
+      setIsSpotifyPlaying(false);
+    }
   }, []);
 
   // function to fetch Currently-playing-music
@@ -185,7 +193,7 @@ export default function Manage() {
             <Status id={id} time={time} title={title} tool={tool} key={id} />
           </div>
             {isSpotifyPlaying && inspectSpotify && currentlyPlaying != null ? (
-          <div className="flex justify-center w-auto">
+          <div className="flex justify-center w-full md:w-auto">
               <Spotify
                 album={trackInfo.album as string}
                 artists={trackInfo.artists as string[]}
