@@ -74,7 +74,7 @@ export default function Status({id, tool, time, title}: {id: string, tool:string
            <span className='text-xl text-fuchsia-600 font-semibold select-none hover:scale-110 transition-all'>{title}</span>
            <span className='font-semibold select-none hover:scale-110 transition-all'>Elapsed: {elapsedTime?.hours} hours and {elapsedTime?.minutes} minutes</span>
            <div className='flex space-x-2 items-baseline'>
-           <span className='text-lg select-none hover:scale-110 transition-all'>Tool: {tool}</span>
+           <span className='md:text-lg select-none hover:scale-110 transition-all'>Tool: {tool}</span>
            <span className='select-none hover:scale-110 transition-all'>•</span>
            <span className='text-cyan-600 select-none hover:scale-110 transition-all'>{currentTime}</span>
            </div>

@@ -16,13 +16,13 @@ const Project = ({repoName, repoDesc, tech, demo, github =''}: {repoName:string,
                 <div>krishnaaaa</div>
             </div>
             <div>
-                <Link href={github}>
+                <Link target='_blank' href={github}>
                 <DiGithubBadge className='text-3xl'/>
                 </Link>
             </div>
         </div>
         <div>
-            <Link href={demo}>
+            <Link target='_blank' href={demo}>
             <span className='text-2xl text-cyan-600 mb-2 inline-block'>{repoName}</span>
             </Link>
             <p className='text-xl'>{repoDesc}</p>

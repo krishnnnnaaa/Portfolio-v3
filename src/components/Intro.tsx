@@ -16,7 +16,7 @@ export default function Intro(){
         <Link className='text-cyan-600 hover:scale-110 px-4 py-2 rounded-full' href={'https://x.com/Krishn_aGupta'}><li></li><BsTwitter/></Link>
             <Link className='text-cyan-600 hover:scale-110 px-4 py-2 rounded-full' href={'https://github.com/krishnnnnaaa/'}><li><BsGithub/></li></Link>
             <Link className='text-cyan-600 hover:scale-110 px-4 py-2 rounded-full' href={'https://www.linkedin.com/in/krishna-gupta-5424b0251/'}><li><BsLinkedin/></li></Link>
-            <Link className='text-cyan-600 hover:scale-110 px-4 py-2 rounded-full' href={'/'}><li><MdOutlineAlternateEmail/></li></Link>
+            <Link className='text-cyan-600 hover:scale-110 px-4 py-2 rounded-full' href={'mailto:gupta.krishnalko111@gmail.com'}><li><MdOutlineAlternateEmail/></li></Link>
             </ul>
         </div>
     </div>

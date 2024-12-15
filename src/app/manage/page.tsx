@@ -35,7 +35,7 @@ export default function Manage() {
 
   // function to extract access_token from browser url and save it to the localstorage for future use
   const extractAccessToken = () => {
-    
+
     // after removing, extact the new one from browser url and store it to the ls
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
@@ -194,7 +194,7 @@ export default function Manage() {
               ""
             )}
             {currentlyPlaying == undefined && !isSpotifyPlaying && (
-              <div className="flex justify-center w-full">
+              <div className="flex justify-center md:w-auto w-full">
               <Alert className="bg-green-500 border-green-500 w-full md:w-[400px] text-white">
                 <AlertTriangle className="h-4 w-4" color="white" />
                 <AlertTitle>Alert!</AlertTitle>

@@ -64,7 +64,7 @@ export default function Hero() {
       <div className="flex flex-col space-y-12">
         <Intro />
         <Status id={id} time={time} title={title} tool={tool} />
-        <div className="w-full md:w-[90%]">
+        <div className="w-[95%] md:w-[90%]">
       {
         trackInfo.toggleSpotifyPlay &&
         <Spotify album={trackInfo.album as string} artists={trackInfo.artists as string[]} date={trackInfo.trackDate as string} img={trackInfo.trackImg as string} track={trackInfo?.track as string} trackUrl={trackInfo.trackUrl as string} key={trackInfo?.track} trackType={trackInfo.trackType as string}/>

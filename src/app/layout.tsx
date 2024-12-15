@@ -7,6 +7,7 @@ import { useFollowPointer } from "@/components/Pointer";
 import { StatusProvider } from "@/features/appState";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import Head from "next/head";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,6 +35,11 @@ export default function RootLayout({
       const { x, y } = useFollowPointer(ref);
   return (
     <html lang="en">
+       <Head>
+        <title>Krishna</title>
+        <meta name="description" content="This is my Portfolio." />
+        <meta name="author" content="Krishna Gupta" />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${karla.variable} antialiased font-karla`}  suppressHydrationWarning={true}
       >

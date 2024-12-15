@@ -1,10 +1,10 @@
 import { StaticImageData } from 'next/image'
-import one from '../assets/tweets/1.png'
 import two from '../assets/tweets/2.png'
 import three from '../assets/tweets/3.png'
 import four from '../assets/tweets/4.png'
 import five from '../assets/tweets/5.png'
 import six from '../assets/tweets/6.png'
+import seven from '../assets/tweets/7.png'
 
 export interface tweetsType{
     id: number,
@@ -25,7 +25,7 @@ export const tweets = [
     },
     {
         id: 3,
-        image: one,
+        image: seven,
         link: 'https://x.com/Krishn_aGupta/status/1485625145330847747'
     },
     {
