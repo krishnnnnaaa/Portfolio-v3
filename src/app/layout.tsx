@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useFollowPointer } from "@/components/Pointer";
 import { StatusProvider } from "@/features/appState";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -41,6 +42,7 @@ export default function RootLayout({
         {children}
         </StatusProvider>
         <Footer/>
+        <Toaster  />
       </body>
 
     </html>

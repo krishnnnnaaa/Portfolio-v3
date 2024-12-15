@@ -1,10 +1,12 @@
 import { StaticImageData } from "next/image";
-import chill from '../assets/activity/chill.avif'
-import cat from '../assets/activity/cat.avif'
+import sleep from '../assets/activity/sleep.avif'
+// import cat from '../assets/activity/cat.avif'
 import coding from '../assets/activity/coding.avif'
 import mask from '../assets/activity/mask.avif'
 import music from '../assets/activity/music.avif'
-import study from '../assets/activity/study.jpg'
+// import study from '../assets/activity/study.jpg'
+import game from '../assets/activity/game.jpg'
+import rest from '../assets/activity/rest.avif'
 
 export interface moodType{
     id: string,
@@ -14,11 +16,11 @@ export interface moodType{
 export const mood:moodType[] = [
     {
         id: '1',
-        image: chill
+        image: sleep
     },
     {
         id: '2',
-        image: cat
+        image: rest
     },
     {
         id: '3',
@@ -26,7 +28,7 @@ export const mood:moodType[] = [
     },
     {
         id: '4',
-        image: study
+        image: game
     },
     {
         id: '5',

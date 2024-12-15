@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
   	extend: {
+		animation: {
+			'spin-slow': 'spin 5s linear infinite'
+		},
   		fontFamily: {
   			karla: ['var(--font-karla)']
   		},
