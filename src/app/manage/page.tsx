@@ -35,22 +35,7 @@ export default function Manage() {
 
   // function to extract access_token from browser url and save it to the localstorage for future use
   const extractAccessToken = () => {
-    const hashedToken = localStorage.getItem("spotify_br_id");
-
-    if (hashedToken) {
-      //if token exists, parse it
-      const { id, expiration_time } = JSON.parse(hashedToken);
-
-      //check if the token is expired or not
-      if (expiration_time > new Date().getHours()) {
-        setInspectSpotify(true);
-        return id;
-      }
-
-      // if it is expired, remove it
-      localStorage.removeItem("spotify_br_id");
-    }
-
+    
     // after removing, extact the new one from browser url and store it to the ls
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
