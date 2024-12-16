@@ -54,6 +54,7 @@ export default function Hero() {
           trackInfo.setTrackType(res?.trackType)
           trackInfo.setTrackUrl(res?.trackUrl)
           trackInfo.setAlbum(res?.album)
+          trackInfo.setToggleSpotifyPlay(res?.shouldSpotifyPlay)
     })
 
   }, []);
