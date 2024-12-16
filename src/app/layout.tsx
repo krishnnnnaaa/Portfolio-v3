@@ -1,7 +1,7 @@
 'use client'
 import localFont from "next/font/local";
 import "./globals.css";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useFollowPointer } from "@/components/Pointer";
 import { StatusProvider } from "@/features/appState";
@@ -33,12 +33,17 @@ export default function RootLayout({
 {
   const ref = useRef(null);
       const { x, y } = useFollowPointer(ref);
+      useEffect(() => {
+        document.title = 'Portfolio • Krishna Gupta'
+      }, [])
   return (
     <html lang="en">
        <Head>
         <title>Krishna</title>
         <meta name="description" content="This is my Portfolio." />
         <meta name="author" content="Krishna Gupta" />
+        <meta property="og:title" content="Your Page Title" />
+        <meta property="og:description" content="This is the description of your page." />
       </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${karla.variable} antialiased font-karla`}  suppressHydrationWarning={true}
