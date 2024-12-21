@@ -38,6 +38,7 @@ const Spotify = ({
   const truncateAlbum =
     album?.split("").slice(0, 15).join("") +
     (album?.split("").length > 15 ? "..." : "");
+    const truncatedArtists = artists?.map((artist: string) => artist.length > 10 ? artist.slice(0, 10) + "..." : artist);
     
     useEffect(() => {
       spotifyPlay
@@ -104,13 +105,13 @@ const Spotify = ({
               <div className="text-sm flex w-full justify-between">
                 <div>
 
-                {artists[0]?.name
-                  ? artists?.map((artist: any | undefined) => (
+                {truncatedArtists[0]?.name
+                  ? truncatedArtists?.map((artist: any | undefined) => (
                       <span className="mr-1" key={artist.id}>
                         {artist.name}
                       </span>
                     ))
-                    : artists?.map((artist: any | undefined) => (
+                    : truncatedArtists?.map((artist: any | undefined) => (
                       <span className="mr-1" key={artist}>
                         {artist}
                       </span>
