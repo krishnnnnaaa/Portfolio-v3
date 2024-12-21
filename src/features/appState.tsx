@@ -19,6 +19,10 @@ interface TrackInfo {
   setTrackType: React.Dispatch<React.SetStateAction<string | null>>;
   toggleSpotifyPlay: boolean;
   setToggleSpotifyPlay: React.Dispatch<React.SetStateAction<boolean>>;
+  trackLyrics: [string];
+  setTrackLyrics: React.Dispatch<React.SetStateAction<[string]>>;
+  toggleLyrics: boolean;
+  setToggleLyrics: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface StatusType {
@@ -32,6 +36,53 @@ interface StatusType {
   setTool: React.Dispatch<React.SetStateAction<string>>;
   trackInfo: TrackInfo;
 }
+
+export interface LyricsLine {
+  startTimeMs: string;
+  words: string;
+  syllables: string[];
+  endTimeMs: string;
+}
+
+// interface Lyrics {
+//   alternatives: any[]; // Replace `any` with a more specific type if known
+//   capStatus: string;
+//   isDenseTypeface: boolean;
+//   isRtlLanguage: boolean;
+//   isSnippet: boolean;
+//   language: string;
+//   lines: [LyricsLine];
+//   provider: string;
+//   providerDisplayName: string;
+//   providerLyricsId: string;
+//   showUpsell: boolean;
+//   syncLyricsUri: string;
+//   syncType: string;
+// }
+
+export const initialLyricsLine:LyricsLine = {
+  startTimeMs: '',
+  words: '',
+  syllables: [],
+  endTimeMs: '',
+}
+
+// const initialLyrics:Lyrics = {
+//   alternatives: [] ,
+//   capStatus: '',
+//   isDenseTypeface: false,
+//   isRtlLanguage: false,
+//   isSnippet: false,
+//   language: '',
+//   lines: [initialLyricsLine],
+//   provider: '',
+//   providerDisplayName: '',
+//   providerLyricsId: '',
+//   showUpsell: false,
+//   syncLyricsUri: '',
+//   syncType: '',
+// }
+
 
 const StatusContext = createContext<StatusType | undefined>(undefined);
 
@@ -50,6 +101,8 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
   const [trackUrl, setTrackUrl] = useState<string | null>(null);
   const [trackType, setTrackType] = useState<string | null>(null);
   const [toggleSpotifyPlay, setToggleSpotifyPlay] = useState<boolean>(true);
+  const [toggleLyrics, setToggleLyrics] = useState<boolean>(false);
+  const [trackLyrics, setTrackLyrics] = useState<[string]>(['']);
   const trackInfo: TrackInfo = {
     track,
     setTrack,
@@ -66,7 +119,11 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
     trackType,
     setTrackType,
     toggleSpotifyPlay, 
-    setToggleSpotifyPlay
+    setToggleSpotifyPlay,
+    setTrackLyrics,
+    trackLyrics,
+    toggleLyrics,
+    setToggleLyrics
   };
 
   return (

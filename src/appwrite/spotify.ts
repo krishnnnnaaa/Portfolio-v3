@@ -11,9 +11,9 @@ export class SpotifyPlay{
         this.databases = new Databases(this.client)
     }
 
-    async saveSpotifyDocument({track, artists, trackDate, trackType, trackUrl, album, trackCover, shouldSpotifyPlay}: {track:string, artists:string, trackDate:string, trackType:string, trackUrl:string, album:string, trackCover:string, shouldSpotifyPlay?: boolean}){
+    async saveSpotifyDocument({track, artists, trackDate, trackType, trackUrl, album, lyrics, trackCover, shouldSpotifyPlay}: {track:string, artists:string, lyrics: string, trackDate:string, trackType:string, trackUrl:string, album:string, trackCover:string, shouldSpotifyPlay?: boolean}){
         try {
-            return await this.databases.updateDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_COLLECTION_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_DOCUMENT_ID || '', {track, artists, trackDate, trackType, trackUrl, album, trackCover, shouldSpotifyPlay})
+            return await this.databases.updateDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_COLLECTION_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_DOCUMENT_ID || '', {track, artists, trackDate, trackType, trackUrl, album, lyrics, trackCover, shouldSpotifyPlay})
         } catch (error) {
             if(error instanceof Error){
                 console.log(error);

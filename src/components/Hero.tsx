@@ -7,6 +7,7 @@ import status from "@/appwrite/status";
 import { useStatus } from "@/features/appState";
 import Spotify from "./Spotify";
 import spotifyPlay from "@/appwrite/spotify";
+import LyricPopover from "./LyricPopover";
 
 interface StatusDocumentType {
   $collectionId: string;
@@ -55,10 +56,11 @@ export default function Hero() {
           trackInfo.setTrackUrl(res?.trackUrl)
           trackInfo.setAlbum(res?.album)
           trackInfo.setToggleSpotifyPlay(res?.shouldSpotifyPlay)
+          trackInfo.setTrackLyrics(JSON.parse(res?.lyrics))
     })
-
+    
   }, []);
-
+  
 
   return (
     <div className="flex justify-between w-full md:w-[85%] md:flex-row flex-col pl-4 md:mx-auto items-start md:items-center md:mb-20 pt-8 md:mt-8">
@@ -69,6 +71,9 @@ export default function Hero() {
       {
         trackInfo.toggleSpotifyPlay &&
         <Spotify album={trackInfo.album as string} artists={trackInfo.artists as string[]} date={trackInfo.trackDate as string} img={trackInfo.trackImg as string} track={trackInfo?.track as string} trackUrl={trackInfo.trackUrl as string} key={trackInfo?.track} trackType={trackInfo.trackType as string}/>
+      }
+      {
+        trackInfo.toggleLyrics && <LyricPopover lyrics={trackInfo.trackLyrics}/>
       }
     </div>
       </div>

@@ -8,6 +8,7 @@ import { Switch } from "./ui/switch";
 import { usePathname } from "next/navigation";
 import spotifyPlay from "@/appwrite/spotify";
 import { useStatus } from "@/features/appState";
+import { TbMicrophone2 } from "react-icons/tb";
 import { useToast } from "@/hooks/use-toast";
 
 const Spotify = ({
@@ -27,30 +28,38 @@ const Spotify = ({
   date: string;
   trackUrl: string;
 }) => {
-  const pathname = usePathname() 
-  const {trackInfo} = useStatus()
-  const {toast} = useToast()
-  const [shouldSpotifyPlay, setShouldSpotifyPlay] = useState(false)
-  const truncateTrack = track?.split("").slice(0, 20).join("") + (track?.split("").length > 20 ? "..." : "");
-  const truncateAlbum = album?.split("").slice(0, 15).join("") + (album?.split("").length > 15 ? "..." : "");
+  const pathname = usePathname();
+  const { trackInfo } = useStatus();
+  const { toast } = useToast();
+  const [shouldSpotifyPlay, setShouldSpotifyPlay] = useState(false);
+  const truncateTrack =
+    track?.split("").slice(0, 20).join("") +
+    (track?.split("").length > 20 ? "..." : "");
+  const truncateAlbum =
+    album?.split("").slice(0, 15).join("") +
+    (album?.split("").length > 15 ? "..." : "");
+    
+    useEffect(() => {
+      spotifyPlay
+      .getSpotifyDoc()
+      .then((res) => setShouldSpotifyPlay(res?.shouldSpotifyPlay));
+  }, []);
 
-  useEffect(() => {
-    spotifyPlay.getSpotifyDoc().then(res => setShouldSpotifyPlay(res?.shouldSpotifyPlay))
-  }, [])
-  const handleSpotifyPlay = ()=>{
-    setShouldSpotifyPlay(!shouldSpotifyPlay)
-    trackInfo.setToggleSpotifyPlay(!shouldSpotifyPlay)
-    if(shouldSpotifyPlay){
+  const handleSpotifyPlay = () => {
+    setShouldSpotifyPlay(!shouldSpotifyPlay);
+    trackInfo.setToggleSpotifyPlay(!shouldSpotifyPlay);
+    
+    if (shouldSpotifyPlay) {
       toast({
         description: "Spotify Play has been deactivated!",
-      })
-    }else{
+      });
+    } else {
+      console.log(trackInfo.trackUrl);
       toast({
         description: "Spotify Play is active now!",
-      })
+      });
     }
-  }
-    
+  };
 
   return (
     <div className="flex hover:scale-110 w-full md:w-[450px] transition-all select-none cursor-pointer justify-end flex-col border-2 border-green-500 bg-green-500 p-4 rounded-2xl">
@@ -79,37 +88,51 @@ const Spotify = ({
               )}
               <div className="spot"></div>
             </div>
-            <div>
+            <div className="w-full flex flex-col space-y-1">
               <div>
-                <span className="inline-block text-xl md:text-2xl">{truncateTrack}</span>
+                <span className="inline-block text-xl md:text-2xl">
+                  {truncateTrack}
+                </span>
               </div>
               <div>
                 <span className="bg-gray-800 p-1 rounded-md">{trackType}</span>
-                <span className="inline-block mx-1">•</span> <span className="md:inline-block hidden">{date}</span>
+                <span className="inline-block mx-1">•</span>{" "}
+                <span className="md:inline-block hidden">{date}</span>
                 <span className="md:inline-block mx-1 hidden">•</span>{" "}
                 <span>{truncateAlbum}</span>
               </div>
-              <div className="text-sm">
-                {artists[0]?.name ? artists?.map(
-                  (artist:any | undefined) => (
-                    <span className="mr-1" key={artist.id}>
-                      {artist.name} 
-                    </span>
-                  )
-                ) : artists?.map(
-                  (artist:any | undefined) => (
-                    <span className="mr-1" key={artist}>
-                      {artist} 
-                    </span>
-                  )
-                )}
+              <div className="text-sm flex w-full justify-between">
+                <div>
+
+                {artists[0]?.name
+                  ? artists?.map((artist: any | undefined) => (
+                      <span className="mr-1" key={artist.id}>
+                        {artist.name}
+                      </span>
+                    ))
+                    : artists?.map((artist: any | undefined) => (
+                      <span className="mr-1" key={artist}>
+                        {artist}
+                      </span>
+                    ))}
+                    </div>
+                    {
+                      pathname == "/" &&
+                      <TbMicrophone2
+                      onClick={()=> trackInfo.setToggleLyrics(true)}
+                      className="bg-[#093d3d] hover:scale-110 transition-all p-2 rounded-full"
+                      size={40}
+                      />
+                    }
               </div>
             </div>
           </div>
-          {
-            pathname == '/manage' && <Switch checked={shouldSpotifyPlay} 
-            onCheckedChange={handleSpotifyPlay} />
-          }
+          {pathname == "/manage" && (
+            <Switch
+              checked={shouldSpotifyPlay}
+              onCheckedChange={handleSpotifyPlay}
+            />
+          )}
         </div>
       ) : (
         <span className="inline-block my-4">

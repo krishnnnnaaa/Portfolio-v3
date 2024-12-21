@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import React, { useEffect, useState } from "react";
 import ToolSet from "@/components/ToolSet";
-import { useStatus } from "@/features/appState";
+import { initialLyricsLine, LyricsLine, useStatus } from "@/features/appState";
 import status from "@/appwrite/status";
 import { AlertTriangle, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -20,6 +20,9 @@ export default function Manage() {
   const { toast } = useToast();
   const router = useRouter();
   const { id, time, title, tool, trackInfo } = useStatus();
+  const [lyricsFile, setlyricsFile] = useState<[LyricsLine]>([
+    initialLyricsLine,
+  ]);
   const [inspectSpotify, setInspectSpotify] = useState(false);
   const [isSpotifyPlaying, setIsSpotifyPlaying] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<undefined | any>();
@@ -27,7 +30,6 @@ export default function Manage() {
 
   const handleStatusEvent = () => {
     // handle status submit button and save the new data to the appwrite db
-
     setisSubmmited(true);
     status.saveDocument({ id, time, title, tool });
     setisSubmmited(false);
@@ -35,7 +37,6 @@ export default function Manage() {
 
   // function to extract access_token from browser url and save it to the localstorage for future use
   const extractAccessToken = () => {
-
     // after removing, extact the new one from browser url and store it to the ls
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
@@ -50,7 +51,7 @@ export default function Manage() {
         })
       );
       setInspectSpotify(true);
-    }else {
+    } else {
       setInspectSpotify(false);
       return null;
     }
@@ -73,6 +74,10 @@ export default function Manage() {
       const artists = currentlyPlaying?.item.album.artists.map(
         (item: { name: string }) => item.name
       );
+
+      // fetch lyrics from given response
+      const lyrics = lyricsFile.map((item: { words: string }) => item.words);
+
       spotifyPlay.saveSpotifyDocument({
         track: currentlyPlaying?.item.name,
         artists: artists,
@@ -82,16 +87,17 @@ export default function Manage() {
         album: currentlyPlaying?.item.album.name,
         trackCover: currentlyPlaying?.item.album.images[0].url,
         shouldSpotifyPlay: trackInfo.toggleSpotifyPlay,
+        lyrics: JSON.stringify(lyrics),
       });
     }
-  }, [currentlyPlaying, trackInfo.toggleSpotifyPlay]);
+  }, [currentlyPlaying, trackInfo.toggleSpotifyPlay, lyricsFile]);
 
   // extract token and fetch Currently-playing-music on every render
   useEffect(() => {
     const accessToken = extractAccessToken();
-    if(accessToken !=null){
+    if (accessToken != null) {
       fetchCurrentlyPlayingMusic(accessToken);
-    }else{
+    } else {
       setCurrentlyPlaying(undefined);
       setIsSpotifyPlaying(false);
     }
@@ -110,6 +116,8 @@ export default function Manage() {
         toast({
           description: "Spotify Play has been updated!",
         });
+
+        showLyrics(tokensh.item.id);
       } else {
         setIsSpotifyPlaying(false);
         trackInfo.setToggleSpotifyPlay(false);
@@ -146,6 +154,26 @@ export default function Manage() {
     }
   };
 
+  const showLyrics = async (trackId: string) => {
+    const url = `https://spotify23.p.rapidapi.com/track_lyrics/?id=${trackId}`;
+    const options = {
+      method: "GET",
+      headers: {
+        "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY!,
+        "x-rapidapi-host": process.env.NEXT_PUBLIC_RAPIDAPI_HOST!,
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const result = await response.json();
+      setlyricsFile(result.lyrics.lines);
+      console.log(result.lyrics.lines);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // get user auth for fetching the token
   const handleAuth = async () => {
     const hash = window.location.hash;
@@ -177,8 +205,8 @@ export default function Manage() {
             <span className="select-none">Preview</span>
             <Status id={id} time={time} title={title} tool={tool} key={id} />
           </div>
-            {isSpotifyPlaying && inspectSpotify && currentlyPlaying != null ? (
-          <div className="flex justify-center w-full md:w-auto">
+          {isSpotifyPlaying && inspectSpotify && currentlyPlaying != null ? (
+            <div className="flex justify-center w-full md:w-auto">
               <Spotify
                 album={trackInfo.album as string}
                 artists={trackInfo.artists as string[]}
@@ -189,19 +217,19 @@ export default function Manage() {
                 key={currentlyPlaying?.timestamp}
                 trackType={trackInfo.trackType as string}
               />
-              </div>
-            ) : (
-              ""
-            )}
-            {currentlyPlaying == undefined && !isSpotifyPlaying && (
-              <div className="flex justify-center md:w-auto w-full">
+            </div>
+          ) : (
+            ""
+          )}
+          {currentlyPlaying == undefined && !isSpotifyPlaying && (
+            <div className="flex justify-center md:w-auto w-full">
               <Alert className="bg-green-500 border-green-500 w-full md:w-[400px] text-white">
                 <AlertTriangle className="h-4 w-4" color="white" />
                 <AlertTitle>Alert!</AlertTitle>
                 <AlertDescription>No music is playing here.</AlertDescription>
               </Alert>
-              </div>
-            )}
+            </div>
+          )}
         </div>
         <Separator
           className="w-full bg-gray-600 my-8"
