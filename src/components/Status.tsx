@@ -72,7 +72,7 @@ export default function Status({id, tool, time, title}: {id: string, tool:string
         : 
           <div className='flex flex-col text-white md:w-auto w-[200px]'>
            <span className='text-base md:text-xl text-fuchsia-600 font-semibold select-none hover:scale-110 transition-all'>{title}</span>
-           <span className='font-semibold text-base select-none hover:scale-110 transition-all'>Elapsed: {elapsedTime?.hours}<span className='md:inline-block hidden mx-1'>hours and </span><span className='inline-block md:hidden'>:</span>{elapsedTime?.minutes} <span className='md:inline-block hidden'> minutes</span> </span>
+           <span className='font-semibold text-base select-none hover:scale-110 transition-all'>Elapsed: {elapsedTime?.hours}<span className='inline-block mx-1'>hours and </span><span className='hidden'>:</span>{elapsedTime?.minutes} <span className='inline-block'> minutes</span> </span>
            <div className='flex space-x-2 text-base md:text-xl items-baseline'>
            <span className='md:text-lg select-none hover:scale-110 transition-all'>Tool: {tool}</span>
            <span className='select-none hover:scale-110 transition-all'>•</span>
