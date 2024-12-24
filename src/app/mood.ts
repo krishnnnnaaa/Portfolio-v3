@@ -20,6 +20,10 @@ import laptop from '../assets/activity/laptop.avif'
 import music2 from '../assets/activity/music2.avif'
 import ready from '../assets/activity/ready.avif'
 import sleep3 from '../assets/activity/sleep3.avif'
+import sleep4 from '../assets/activity/sleep4.avif'
+import sleep5 from '../assets/activity/sleep5.avif'
+import tired2 from '../assets/activity/tired2.jpg'
+import angry2 from '../assets/activity/angry2.avif'
 import tired from '../assets/activity/tired.avif'
 import work from '../assets/activity/work.avif'
 
@@ -112,5 +116,21 @@ export const mood:moodType[] = [
     {
         id: '21',
         image: work
+    },
+    {
+        id: '22',
+        image: tired2
+    },
+    {
+        id: '23',
+        image: sleep4
+    },
+    {
+        id: '24',
+        image: sleep5
+    },
+    {
+        id: '25',
+        image: angry2
     },
 ]

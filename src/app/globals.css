@@ -48,24 +48,24 @@ body {
   border-radius: 8px; /* Rounded corners for the track */
 }
 
-/* .animate-scroll {
-  animation: scroll-animation 10s linear infinite;
+.animate-scroll {
+  animation: scroll-animation 18s linear infinite;
 }
 
 @keyframes scroll-animation {
   0% {
-    transform: translateX(100%);
+    transform: translateX(40%);
   }
-  40% {
-    transform: translateX(0);
+  30% {
+    transform: translateX(0%);
   }
-  55% {
-    transform: translateX(0);
+  45% {
+    transform: translateX(0%);
   }
   100% {
     transform: translateX(-100%);
   }
-} */
+}
 
 @keyframes scroll{
   0%{
