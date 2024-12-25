@@ -30,6 +30,8 @@ interface StatusType {
   title: string;
   time: string;
   tool: string;
+  workTool: string;
+  setWorkTool: React.Dispatch<React.SetStateAction<string>>;
   setId: React.Dispatch<React.SetStateAction<string>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setTime: React.Dispatch<React.SetStateAction<string>>;
@@ -91,6 +93,7 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
   const [title, setTitle] = useState('Coding');
   const [time, setTime] = useState('06:40');
   const [tool, setTool] = useState('VS Code');
+  const [workTool, setWorkTool] = useState('NextJS');
 
   // Track-related states
   const [track, setTrack] = useState<string | null>(null);
@@ -138,6 +141,8 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
         tool,
         setTool,
         trackInfo,
+        workTool, 
+        setWorkTool
       }}
     >
       {children}

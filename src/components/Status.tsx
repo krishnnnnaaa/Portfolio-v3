@@ -4,17 +4,21 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mood } from "@/app/mood";
 import { Loader2 } from "lucide-react";
+import { stack } from "@/app/stack";
+import spotify from '../assets/code/spotify.webp'
 
 export default function Status({
   id,
   tool,
   time,
   title,
+  workTool
 }: {
   id: string;
   tool: string;
   time: string;
   title: string;
+  workTool: string;
 }) {
   const [clickCount, setClickCount] = useState(0);
   const [currentTime, setCurrentTime] = useState("04:35:04 PM");
@@ -61,6 +65,15 @@ export default function Status({
   };
 
   const item = mood.find((obj) => obj.id === id);
+  let workspaceTool = stack.find((tool) => tool.name === workTool);
+  // console.log(workTool);
+  
+  var otherTool;
+  if(workTool === "Spotify"){
+    otherTool = spotify
+  }
+  
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -82,7 +95,7 @@ export default function Status({
       <div className="text-2xl text-orange-300 select-none hover:scale-110 transition-all">
         Status
       </div>
-      <div className="flex space-x-4 md:ml-0 items-center">
+      <div className="flex space-x-4 md:ml-0 items-start">
         <div>
           <Image
             src={item?.image as StaticImageData}
@@ -92,6 +105,10 @@ export default function Status({
             height={80}
             width={80}
           />
+          {
+            workspaceTool ?
+            <Image src={workspaceTool?.image as StaticImageData} className="rounded-full hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/> : <Image src={otherTool as StaticImageData} className="rounded-full hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/>
+          }
         </div>
         {!elapsedTime ? (
           <p className="flex my-auto text-orange-300 font-semibold">

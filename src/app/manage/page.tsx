@@ -15,11 +15,12 @@ import { useRouter } from "next/navigation";
 import Spotify from "@/components/Spotify";
 import spotifyPlay from "@/appwrite/spotify";
 import { useToast } from "@/hooks/use-toast";
+import WorkspaceTool from "@/components/WorkspaceTool";
 
 export default function Manage() {
   const { toast } = useToast();
   const router = useRouter();
-  const { id, time, title, tool, trackInfo } = useStatus();
+  const { id, time, title, tool, trackInfo, workTool } = useStatus();
   const [lyricsFile, setlyricsFile] = useState<[LyricsLine]>([
     initialLyricsLine,
   ]);
@@ -31,7 +32,7 @@ export default function Manage() {
   const handleStatusEvent = () => {
     // handle status submit button and save the new data to the appwrite db
     setisSubmmited(true);
-    status.saveDocument({ id, time, title, tool });
+    status.saveDocument({ id, time, title, tool, workTool });
     setisSubmmited(false);
   };
 
@@ -203,7 +204,7 @@ export default function Manage() {
         <div className="flex justify-between space-y-8 md:space-x-0 md:flex-row flex-col w-full items-center md:items-end">
           <div>
             <span className="select-none">Preview</span>
-            <Status id={id} time={time} title={title} tool={tool} key={id} />
+            <Status id={id} time={time} title={title} tool={tool} key={id} workTool={workTool} />
           </div>
           {isSpotifyPlaying && inspectSpotify && currentlyPlaying != null ? (
             <div className="flex justify-center w-full md:w-auto">
@@ -240,6 +241,7 @@ export default function Manage() {
           <div className="flex md:flex-row flex-col md:space-y-0 space-y-4 justify-between space-x-0">
             <Title />
             <ToolSet />
+            <WorkspaceTool/>
             <Time />
           </div>
           <Button

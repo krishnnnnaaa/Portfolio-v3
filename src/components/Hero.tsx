@@ -38,13 +38,14 @@ export interface SpotifyDocumentType {
 }
 
 export default function Hero() {
-  const { setId, setTime, setTitle, setTool, id, time, title, tool, trackInfo } = useStatus();
+  const { setId, setTime, setTitle, setTool, id, time, title, tool, trackInfo, setWorkTool, workTool } = useStatus();
   useEffect(() => {
     status.getDoc().then(res => {
       setId(res?.id);
       setTime(res?.time);
       setTitle(res?.title);
       setTool(res?.tool);
+      setWorkTool(res?.workTool)
     });
     
     spotifyPlay.getSpotifyDoc().then((res)=> {
@@ -66,7 +67,7 @@ export default function Hero() {
     <div className="flex justify-between w-full md:w-[85%] md:flex-row flex-col pl-4 md:mx-auto items-start md:items-center md:mb-20 pt-8 md:mt-8">
       <div className="flex flex-col space-y-12">
         <Intro />
-        <Status id={id} time={time} title={title} tool={tool} />
+        <Status id={id} time={time} title={title} tool={tool} workTool={workTool} />
         <div className="w-[95%] md:w-[90%]">
       {
         trackInfo.toggleSpotifyPlay &&
