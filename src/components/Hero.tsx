@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Intro from "./Intro";
 import Bio from "./Bio";
 import Status from "./Status";
@@ -9,18 +9,6 @@ import Spotify from "./Spotify";
 import spotifyPlay from "@/appwrite/spotify";
 import LyricPopover from "./LyricPopover";
 
-interface StatusDocumentType {
-  $collectionId: string;
-  $createdAt: string;
-  $databaseId: string;
-  $id: string;
-  $permissions: [];
-  $updatedAt: string;
-  id: string;
-  time: string;
-  title: string;
-  tool: string;
-}
 export interface SpotifyDocumentType {
   $collectionId: string;
   $createdAt: string;
@@ -28,40 +16,85 @@ export interface SpotifyDocumentType {
   $id: string;
   $permissions: [];
   $updatedAt: string;
-  artists: string[],
-  album: string,
-  track: string,
-  trackCover: string,
-  trackDate: string,
-  trackType: string,
-  trackUrl: string
+  artists: string[];
+  album: string;
+  track: string;
+  trackCover: string;
+  trackDate: string;
+  trackType: string;
+  trackUrl: string;
+  lyrics: string;
+  shouldSpotifyPlay: boolean;
 }
 
 export default function Hero() {
-  const { setId, setTime, setTitle, setTool, id, time, title, tool, trackInfo, setWorkTool, workTool } = useStatus();
+  const {
+    setId,
+    setTime,
+    setTitle,
+    setTool,
+    id,
+    time,
+    title,
+    tool,
+    trackInfo,
+    setWorkTool,
+    workTool,
+  } = useStatus();
+
   useEffect(() => {
-    status.getDoc().then(res => {
-      setId(res?.id);
-      setTime(res?.time);
-      setTitle(res?.title);
-      setTool(res?.tool);
-      setWorkTool(res?.workTool)
+    // Fetch initial data for status and Spotify document
+    status
+      .getDoc()
+      .then((res) => {
+        setId(res?.id);
+        setTime(res?.time);
+        setTitle(res?.title);
+        setTool(res?.tool);
+        setWorkTool(res?.workTool);
+      })
+      .catch((error) => console.error("Error fetching status:", error));
+
+    spotifyPlay
+      .getSpotifyDoc()
+      .then((res) => {
+        if (res) {
+          trackInfo.setTrack(res.track);
+          trackInfo.setArtists(res.artists);
+          trackInfo.setTrackDate(res.trackDate);
+          trackInfo.setTrackImg(res.trackCover);
+          trackInfo.setTrackType(res.trackType);
+          trackInfo.setTrackUrl(res.trackUrl);
+          trackInfo.setAlbum(res.album);
+          trackInfo.setToggleSpotifyPlay(res.shouldSpotifyPlay);
+          trackInfo.setTrackLyrics(JSON.parse(res.lyrics));
+        }
+      })
+      .catch((error) => console.error("Error fetching Spotify document:", error));
+
+    // Subscribe to real-time updates
+    const unsubscribe = spotifyPlay.getRealtimeSpotifyDoc((response) => {
+      const updatedData = response.payload as SpotifyDocumentType;
+
+      // Update the track info state with real-time data
+      if (updatedData) {
+        trackInfo.setTrack(updatedData.track);
+        trackInfo.setArtists(updatedData.artists);
+        trackInfo.setTrackDate(updatedData.trackDate);
+        trackInfo.setTrackImg(updatedData.trackCover);
+        trackInfo.setTrackType(updatedData.trackType);
+        trackInfo.setTrackUrl(updatedData.trackUrl);
+        trackInfo.setAlbum(updatedData.album);
+        trackInfo.setToggleSpotifyPlay(updatedData.shouldSpotifyPlay);
+        trackInfo.setTrackLyrics(JSON.parse(updatedData.lyrics));
+      }
     });
-    
-    spotifyPlay.getSpotifyDoc().then((res)=> {
-      trackInfo.setTrack(res?.track)
-      trackInfo.setArtists(res?.artists)
-          trackInfo.setTrackDate(res?.trackDate)
-          trackInfo.setTrackImg(res?.trackCover)
-          trackInfo.setTrackType(res?.trackType)
-          trackInfo.setTrackUrl(res?.trackUrl)
-          trackInfo.setAlbum(res?.album)
-          trackInfo.setToggleSpotifyPlay(res?.shouldSpotifyPlay)
-          trackInfo.setTrackLyrics(JSON.parse(res?.lyrics))
-    })
-    
-  }, []);
-  
+
+    // Cleanup on component unmount
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
+  }, [setId, setTime, setTitle, setTool, setWorkTool, trackInfo]);
 
   return (
     <div className="flex justify-between w-full md:w-[85%] md:flex-row flex-col pl-4 md:mx-auto items-start md:items-center md:mb-20 pt-8 md:mt-8">
@@ -69,14 +102,20 @@ export default function Hero() {
         <Intro />
         <Status id={id} time={time} title={title} tool={tool} workTool={workTool} />
         <div className="w-[95%] md:w-[90%]">
-      {
-        trackInfo.toggleSpotifyPlay &&
-        <Spotify album={trackInfo.album as string} artists={trackInfo.artists as string[]} date={trackInfo.trackDate as string} img={trackInfo.trackImg as string} track={trackInfo?.track as string} trackUrl={trackInfo.trackUrl as string} key={trackInfo?.track} trackType={trackInfo.trackType as string}/>
-      }
-      {
-        trackInfo.toggleLyrics && <LyricPopover lyrics={trackInfo.trackLyrics}/>
-      }
-    </div>
+          {trackInfo.toggleSpotifyPlay && (
+            <Spotify
+              album={trackInfo.album as string}
+              artists={trackInfo.artists as string[]}
+              date={trackInfo.trackDate as string}
+              img={trackInfo.trackImg as string}
+              track={trackInfo.track as string}
+              trackUrl={trackInfo.trackUrl as string}
+              key={trackInfo.track}
+              trackType={trackInfo.trackType as string}
+            />
+          )}
+          {trackInfo.toggleLyrics && <LyricPopover lyrics={trackInfo.trackLyrics} />}
+        </div>
       </div>
       <div className="md:w-auto w-full">
         <Bio />

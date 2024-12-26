@@ -169,7 +169,6 @@ export default function Manage() {
       const response = await fetch(url, options);
       const result = await response.json();
       setlyricsFile(result.lyrics.lines);
-      console.log(result.lyrics.lines);
     } catch (error) {
       console.error(error);
     }

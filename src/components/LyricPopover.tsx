@@ -10,6 +10,7 @@ interface LyricPopoverProps {
 
 const LyricPopover: React.FC<LyricPopoverProps> = ({ lyrics }) => {
   const {trackInfo} = useStatus()
+  
   return (
     <div className="fixed inset-0 bg-black backdrop-blur-[6px] bg-opacity-70 flex justify-center items-center z-50">
       <div className="modal-container w-[90%] md:w-[600px] h-[70vh] md:h-[600px] bg-[#00b5ff] rounded-xl shadow-lg p-4 overflow-y-scroll relative">
