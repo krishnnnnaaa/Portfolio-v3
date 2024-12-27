@@ -115,7 +115,7 @@ export default function Status({
             Fetching <Loader2 className="mx-2 inline-block animate-spin" />
           </p>
         ) : (
-          <div className="flex flex-col text-white w-[200px] md:w-[250px] overflow-hidden whitespace-nowrap">
+          <div className="flex flex-col text-white w-[220px] md:w-[250px] overflow-hidden whitespace-nowrap">
             <span
               className={`text-base md:text-xl text-fuchsia-600 font-semibold w-fit select-none hover:scale-110 transition-all ${
                 title.length > 25 ? "animate-scroll" : ""

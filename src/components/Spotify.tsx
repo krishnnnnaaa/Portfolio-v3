@@ -124,10 +124,13 @@ const Spotify = ({
                     ))}
                     </div>
                     {
-                      pathname == "/" &&
+                      pathname == "/" && trackInfo.trackLyrics.length != 1 ?
                       <TbMicrophone2
                       onClick={()=> trackInfo.setToggleLyrics(true)}
                       className="bg-[#093d3d] hover:scale-110 transition-all p-1.5 rounded-full"
+                      size={30}
+                      /> : <TbMicrophone2
+                      className="bg-[#181818c2] text-[#6d6d6d] cursor-none p-1.5 rounded-full"
                       size={30}
                       />
                     }
