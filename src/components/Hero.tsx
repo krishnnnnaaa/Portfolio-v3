@@ -72,28 +72,47 @@ export default function Hero() {
       })
       .catch((error) => console.error("Error fetching Spotify document:", error));
 
-    // Subscribe to real-time updates
-    const unsubscribe = spotifyPlay.getRealtimeSpotifyDoc((response) => {
-      const updatedData = response.payload as SpotifyDocumentType;
+    // Subscribe to real-time spotify updates
+    const unsubscribeSpotify  = spotifyPlay.getRealtimeSpotifyDoc((response) => {
+      const updatedSpotifyData = response.payload as SpotifyDocumentType;
 
       // Update the track info state with real-time data
-      if (updatedData) {
-        trackInfo.setTrack(updatedData.track);
-        trackInfo.setArtists(updatedData.artists);
-        trackInfo.setTrackDate(updatedData.trackDate);
-        trackInfo.setTrackImg(updatedData.trackCover);
-        trackInfo.setTrackType(updatedData.trackType);
-        trackInfo.setTrackUrl(updatedData.trackUrl);
-        trackInfo.setAlbum(updatedData.album);
-        trackInfo.setToggleSpotifyPlay(updatedData.shouldSpotifyPlay);
-        trackInfo.setTrackLyrics(JSON.parse(updatedData.lyrics));
+      if (updatedSpotifyData) {
+        trackInfo.setTrack(updatedSpotifyData.track);
+        trackInfo.setArtists(updatedSpotifyData.artists);
+        trackInfo.setTrackDate(updatedSpotifyData.trackDate);
+        trackInfo.setTrackImg(updatedSpotifyData.trackCover);
+        trackInfo.setTrackType(updatedSpotifyData.trackType);
+        trackInfo.setTrackUrl(updatedSpotifyData.trackUrl);
+        trackInfo.setAlbum(updatedSpotifyData.album);
+        trackInfo.setToggleSpotifyPlay(updatedSpotifyData.shouldSpotifyPlay);
+        trackInfo.setTrackLyrics(JSON.parse(updatedSpotifyData.lyrics));
       }
     });
 
+    const unsubscribeStatus = status.getRealtimeStatusDoc((response) => {
+      const updatedStatusData = response.payload;
+
+      if (updatedStatusData) {
+        setId(updatedStatusData.id);
+        setTime(updatedStatusData.time);
+        setTitle(updatedStatusData.title);
+        setTool(updatedStatusData.tool);
+        setWorkTool(updatedStatusData.workTool);
+      }
+    })
+
+
+
     // Cleanup on component unmount
     return () => {
-      if (unsubscribe) unsubscribe();
+      if (unsubscribeSpotify) unsubscribeSpotify();
+      if(unsubscribeStatus) unsubscribeStatus();
     };
+
+
+
+
   }, [setId, setTime, setTitle, setTool, setWorkTool, trackInfo]);
 
   return (

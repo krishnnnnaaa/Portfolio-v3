@@ -31,6 +31,24 @@ export class Status{
             }
         }
     }
+
+    getRealtimeStatusDoc(callback: (data: any) => void) {
+        try {
+            const channel = `databases.${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}.collections.${process.env.NEXT_PUBLIC_APPWRITE_STATUS_COLLECTION_ID}.documents.${process.env.NEXT_PUBLIC_APPWRITE_STATUS_DOCUMENT_ID}`;
+            
+            // Subscribe to real-time updates
+            const unsubscribe = this.client.subscribe(channel, (response) => {
+                callback(response);
+            });
+    
+            // Return the unsubscribe function for cleanup
+            return unsubscribe;
+        } catch (error) {
+            if (error instanceof Error) {
+                console.log(error);
+            }
+        }
+    }
 }
 
 const status = new Status()
