@@ -26,7 +26,7 @@ export default function Mood(){
             loading && <Loader2Icon className='animate-spin'/>
           }
         {
-                    moodIcon && moodIcon.map(item => <Image onClick={()=> handleImage(item.id)} className='select-none m-1 hover:scale-110 transition-all cursor-pointer' src={item.image} alt='mood' height={80} width={80} key={item.id}/>)
+                    moodIcon && moodIcon.map(item => <Image onClick={()=> handleImage(item.id)} className='md:w-20 md:h-20 w-[60px] h-[60px] select-none m-1 hover:scale-110 transition-all cursor-pointer' src={item.image} alt='mood' height={80} width={80} key={item.id}/>)
 }
 {/* <div className='border-[3px] border-dashed m-1 border-cyan-600 px-2 py-4 rounded-xl text-orange-300 select-none hover:scale-110 transition-all cursor-pointer flex flex-col justify-center items-center'>
   <PlusIcon/>
