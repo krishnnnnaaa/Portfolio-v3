@@ -20,7 +20,7 @@ const WorkspaceTool = () => {
   return (
     <div className='flex flex-col space-y-2'>
         <div>
-            <span className='inline-block select-none hover:scale-110 cursor-pointer transition-all'>Workspace Tool</span>
+            <span className='inline-block select-none hover:scale-110 cursor-pointer transition-all'>Workspace Tool/Emojis</span>
         </div>
         <div>
             <Select onValueChange={(e)=> handleTool(e)} defaultValue={workTool} >
