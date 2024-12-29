@@ -26,6 +26,19 @@ import tired2 from '../assets/activity/tired2.jpg'
 import angry2 from '../assets/activity/angry2.avif'
 import tired from '../assets/activity/tired.avif'
 import work from '../assets/activity/work.avif'
+import crying2 from '../assets/activity/crying2.avif'
+import crying3 from '../assets/activity/crying3.avif'
+import crying4 from '../assets/activity/crying4.avif'
+import happy from '../assets/activity/happy.avif'
+import sadcat from '../assets/activity/sadcat.avif'
+import happy2 from '../assets/activity/happy2.avif'
+import happy3 from '../assets/activity/happy3.avif'
+import happy4 from '../assets/activity/happy4.avif'
+import happy5 from '../assets/activity/happy5.avif'
+import bear from '../assets/activity/bear.avif'
+import chill3 from '../assets/activity/chill3.avif'
+import laptop2 from '../assets/activity/laptop2.avif'
+import mask2 from '../assets/activity/mask2.avif'
 
 export interface moodType{
     id: string,
@@ -132,5 +145,57 @@ export const mood:moodType[] = [
     {
         id: '25',
         image: angry2
+    },
+    {
+        id: '26',
+        image: crying2
+    },
+    {
+        id: '27',
+        image: crying3
+    },
+    {
+        id: '28',
+        image: crying4
+    },
+    {
+        id: '29',
+        image: happy
+    },
+    {
+        id: '30',
+        image: sadcat
+    },
+    {
+        id: '31',
+        image: happy2
+    },
+    {
+        id: '32',
+        image: happy3
+    },
+    {
+        id: '33',
+        image: happy4
+    },
+    {
+        id: '34',
+        image: happy5
+    },
+    {
+        id: '35',
+        image: bear
+    },
+    {
+        id: '36',
+        image: chill3
+    },
+    {
+        id: '37',
+        image: laptop2
+    },
+    {
+        id: '38',
+        image: mask2
     },
 ]

@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mood } from "@/app/mood";
 import { Loader2 } from "lucide-react";
-import { stack } from "@/app/stack";
 import spotify from '../assets/code/spotify.webp'
+import { workspaceStack } from "@/app/workspacetoolicons";
 
 export default function Status({
   id,
@@ -65,14 +65,7 @@ export default function Status({
   };
 
   const item = mood.find((obj) => obj.id === id);
-  let workspaceTool = stack.find((tool) => tool.name === workTool);
-  // console.log(workTool);
-  
-  var otherTool;
-  if(workTool === "Spotify"){
-    otherTool = spotify
-  }
-  
+  let workspaceTool = workspaceStack.find((tool) => tool.name === workTool);
 
 
   useEffect(() => {
@@ -106,8 +99,8 @@ export default function Status({
             width={80}
           />
           {
-            workspaceTool ?
-            <Image src={workspaceTool?.image as StaticImageData} className="rounded-full hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/> : <Image src={otherTool as StaticImageData} className="rounded-full hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/>
+            workspaceTool &&
+            <Image src={workspaceTool?.image as StaticImageData} className="rounded-full hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/>
           }
         </div>
         {!elapsedTime ? (

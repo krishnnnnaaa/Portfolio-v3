@@ -1,7 +1,7 @@
 'use client'
 import { mood, moodType } from '@/app/mood'
 import { useStatus } from '@/features/appState'
-import { Loader2Icon } from 'lucide-react'
+import { Loader2Icon, PlusIcon } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
@@ -28,6 +28,10 @@ export default function Mood(){
         {
                     moodIcon && moodIcon.map(item => <Image onClick={()=> handleImage(item.id)} className='select-none m-1 hover:scale-110 transition-all cursor-pointer' src={item.image} alt='mood' height={80} width={80} key={item.id}/>)
 }
+{/* <div className='border-[3px] border-dashed m-1 border-cyan-600 px-2 py-4 rounded-xl text-orange-300 select-none hover:scale-110 transition-all cursor-pointer flex flex-col justify-center items-center'>
+  <PlusIcon/>
+  <span className='inline-block text-xs'>Add Image</span>
+</div> */}
         </div>
     </div>
   )

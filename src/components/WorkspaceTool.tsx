@@ -9,8 +9,7 @@ import {
   } from "@/components/ui/select"
 import { useStatus } from '@/features/appState'
 import Image from 'next/image'
-import { stack } from '@/app/stack'
-import spotify from '../assets/code/spotify.webp'
+import {workspaceStack} from '../app/workspacetoolicons'
 
 const WorkspaceTool = () => {
   const {setWorkTool, workTool } = useStatus()
@@ -30,9 +29,8 @@ const WorkspaceTool = () => {
   </SelectTrigger>
   <SelectContent className='bg-[#010a15]'>
     {
-        stack.map((item)=> <SelectItem className='bg-[#010a15] text-white flex items-center' key={item.id} value={item.name}><Image src={item.image} width={20} height={20} className='inline-block mx-1' alt='img'/>{item.name}</SelectItem>)
+        workspaceStack.map((item)=> <SelectItem className='bg-[#010a15] text-white flex items-center' key={item.id} value={item.name}><Image src={item.image} width={20} height={20} className='inline-block mx-1' alt='img'/>{item.name}</SelectItem>)
     }
-    <SelectItem className='bg-[#010a15] text-white flex items-center' value={'Spotify'}><Image src={spotify} width={20} height={20} key={453} className='inline-block mx-1' alt='img'/>Spotify</SelectItem>
   </SelectContent>
 </Select>
             </div>
