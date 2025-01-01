@@ -6,6 +6,12 @@ import { mood } from "@/app/mood";
 import { Loader2 } from "lucide-react";
 import spotify from '../assets/code/spotify.webp'
 import { workspaceStack } from "@/app/workspacetoolicons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export default function Status({
   id,
@@ -100,7 +106,16 @@ export default function Status({
           />
           {
             workspaceTool &&
-            <Image src={workspaceTool?.image as StaticImageData} className="rounded-full hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/>
+            <TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger>
+  <Image src={workspaceTool?.image as StaticImageData} className="rounded-full hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/>
+    </TooltipTrigger>
+    <TooltipContent className="bg-gray-600 text-white p-2 rounded-lg border-none outline-none" >
+      <p>{workspaceTool.name}</p>
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>
           }
         </div>
         {!elapsedTime ? (

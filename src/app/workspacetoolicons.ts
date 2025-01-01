@@ -19,6 +19,8 @@ import melting from '../assets/emotes/melting.webp'
 import smilingfacewithtear from '../assets/emotes/smilingfacewithtear.webp'
 import upsidedownface from '../assets/emotes/upsidedownface.webp'
 import spotify from '../assets/code/spotify.webp'
+import offline from '../assets/emotes/offline.png'
+import brave from '../assets/code/brave.webp'
 import { StaticImageData } from 'next/image'
 
 export interface workspaceStackType{
@@ -132,5 +134,15 @@ export const workspaceStack = [
         id: 21,
         name: "Expressionless",
         image: expressionless
+    },
+    {
+        id: 22,
+        name: "Brave",
+        image: brave
+    },
+    {
+        id: 23,
+        name: "Offline",
+        image: offline
     }
 ]
