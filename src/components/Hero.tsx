@@ -25,6 +25,8 @@ export interface SpotifyDocumentType {
   trackUrl: string;
   lyrics: string;
   shouldSpotifyPlay: boolean;
+  duration: number;
+  progress: number;
 }
 
 export default function Hero() {
@@ -68,6 +70,8 @@ export default function Hero() {
           trackInfo.setAlbum(res.album);
           trackInfo.setToggleSpotifyPlay(res.shouldSpotifyPlay);
           trackInfo.setTrackLyrics(JSON.parse(res.lyrics));
+          trackInfo.setDuration(res.duration);
+          trackInfo.setProgress(res.progress);
         }
       })
       .catch((error) => console.error("Error fetching Spotify document:", error));
@@ -87,6 +91,8 @@ export default function Hero() {
         trackInfo.setAlbum(updatedSpotifyData.album);
         trackInfo.setToggleSpotifyPlay(updatedSpotifyData.shouldSpotifyPlay);
         trackInfo.setTrackLyrics(JSON.parse(updatedSpotifyData.lyrics));
+        trackInfo.setDuration(updatedSpotifyData.duration);
+        trackInfo.setProgress(updatedSpotifyData.progress)
       }
     });
 

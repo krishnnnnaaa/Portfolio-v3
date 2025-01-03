@@ -23,6 +23,10 @@ interface TrackInfo {
   setTrackLyrics: React.Dispatch<React.SetStateAction<[string]>>;
   toggleLyrics: boolean;
   setToggleLyrics: React.Dispatch<React.SetStateAction<boolean>>;
+  duration: number;
+  setDuration: React.Dispatch<React.SetStateAction<number>>;
+  progress: number;
+  setProgress: React.Dispatch<React.SetStateAction<number>>;
 }
 
 interface StatusType {
@@ -106,6 +110,8 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
   const [toggleSpotifyPlay, setToggleSpotifyPlay] = useState<boolean>(true);
   const [toggleLyrics, setToggleLyrics] = useState<boolean>(false);
   const [trackLyrics, setTrackLyrics] = useState<[string]>(['']);
+  const [duration, setDuration] = useState<number>(0)
+  const [progress, setProgress] = useState<number>(0)
   const trackInfo: TrackInfo = {
     track,
     setTrack,
@@ -126,7 +132,11 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
     setTrackLyrics,
     trackLyrics,
     toggleLyrics,
-    setToggleLyrics
+    setToggleLyrics,
+    duration,
+    setDuration,
+    progress,
+    setProgress,
   };
 
   return (

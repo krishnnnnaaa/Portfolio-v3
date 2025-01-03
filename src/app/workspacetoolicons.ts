@@ -92,7 +92,7 @@ export const workspaceStack = [
     },
     {
         id: 13,
-        name: "VSCode",
+        name: "VS Code",
         image: vscode
     },
     {

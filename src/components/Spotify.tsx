@@ -2,7 +2,7 @@
 import { Loader2Icon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsSpotify } from "react-icons/bs";
 import { Switch } from "./ui/switch";
 import { usePathname } from "next/navigation";
@@ -28,10 +28,12 @@ const Spotify = ({
   date: string;
   trackUrl: string;
 }) => {
+  const { toast } = useToast();
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pathname = usePathname();
   const { trackInfo } = useStatus();
-  const { toast } = useToast();
   const [shouldSpotifyPlay, setShouldSpotifyPlay] = useState(false);
+  const [startTime, setStartTime] = useState<number>(Date.now());
   const truncateTrack =
     track?.split("").slice(0, 20).join("") +
     (track?.split("").length > 20 ? "..." : "");
@@ -40,13 +42,50 @@ const Spotify = ({
     (album?.split("").length > 15 ? "..." : "");
     let truncatedArtists = artists?.map((artist: string) => artist.length > 10 ? artist.slice(0, 10) + "..." : artist)
     truncatedArtists = truncatedArtists?.length > 2 ? truncatedArtists?.slice(0,2).concat("...") : truncatedArtists;
-    const hasMultipleArtists = truncatedArtists?.length > 1;
     
     useEffect(() => {
       spotifyPlay
       .getSpotifyDoc()
-      .then((res) => setShouldSpotifyPlay(res?.shouldSpotifyPlay));
-  }, []);
+      // setStartTime(Date.now());
+      
+    }, []);
+    useEffect(() => {
+      if(intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      setStartTime(Date.now());
+      updateProgressBar()
+
+        return () => {
+          // Cleanup on component unmount or before the next effect runs
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+          }
+        };
+        
+      }, [trackInfo.progress]);
+      
+      
+      const updateProgressBar = ()=>{
+    intervalRef.current = setInterval(() => {
+      const ElapsedTime = Date.now() - startTime;
+      const currentProgress = trackInfo.progress + ElapsedTime;
+      if(currentProgress >= trackInfo.duration){
+        clearInterval(intervalRef.current as ReturnType<typeof setInterval>);
+        intervalRef.current = null;
+      }else{
+        const progressPercentage = (currentProgress / trackInfo.duration) * 100;
+        const progress = document.getElementById('progress-bar')
+        if(progress){
+          progress.style.width = `${progressPercentage}%`;
+        }
+      }
+        
+      }, 1000);
+      }
+
+
+
 
   const handleSpotifyPlay = () => {
     setShouldSpotifyPlay(!shouldSpotifyPlay);
@@ -93,9 +132,11 @@ const Spotify = ({
             </div>
             <div className="w-full flex flex-col">
               <div className="overflow-hidden relative whitespace-nowrap ">
-                <span className="inline-block text-base md:text-xl">
+              <Link href={trackUrl} target="_blank">
+                <span className="inline-block hover:underline text-base md:text-xl">
                   {truncateTrack}
                 </span>
+          </Link>
               </div>
               <div className="md:text-base text-xs">
                 <span className="md:inline-block hidden bg-gray-800 p-1 rounded-md">{trackType}</span>
@@ -141,10 +182,11 @@ const Spotify = ({
           </div>
           {pathname == "/manage" && (
             <Switch
-              checked={shouldSpotifyPlay}
-              onCheckedChange={handleSpotifyPlay}
+            checked={shouldSpotifyPlay}
+            onCheckedChange={handleSpotifyPlay}
             />
           )}
+          <div id="progress-bar" className="h-1 relative -bottom-[1.2rem] self-baseline flex  bg-gray-800"></div>
         </div>
       ) : (
         <span className="inline-block my-4">

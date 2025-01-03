@@ -28,6 +28,9 @@ export default function Manage() {
   const [isSpotifyPlaying, setIsSpotifyPlaying] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<undefined | any>();
   const [isSubmmited, setisSubmmited] = useState(false);
+  // console.log(trackInfo);
+  
+
 
   const handleStatusEvent = () => {
     // handle status submit button and save the new data to the appwrite db
@@ -38,7 +41,6 @@ export default function Manage() {
 
   // function to extract access_token from browser url and save it to the localstorage for future use
   const extractAccessToken = () => {
-    // after removing, extact the new one from browser url and store it to the ls
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
     const accessToken = params.get("access_token");
@@ -60,7 +62,7 @@ export default function Manage() {
     return accessToken;
   };
 
-  // set the SpotifyPlay data to the global context from the local state
+  // set the SpotifyPlay data to the global context and to the appwrite db from the local state
   useEffect(() => {
     trackInfo.setAlbum(currentlyPlaying?.item.album.name);
     trackInfo.setArtists(currentlyPlaying?.item.album.artists);
@@ -69,6 +71,8 @@ export default function Manage() {
     trackInfo.setTrackImg(currentlyPlaying?.item.album.images[0].url);
     trackInfo.setTrackType(currentlyPlaying?.currently_playing_type);
     trackInfo.setTrackUrl(currentlyPlaying?.item.external_urls.spotify);
+    trackInfo.setDuration(currentlyPlaying?.item.duration_ms);
+    trackInfo.setProgress(currentlyPlaying?.progress_ms);
 
     // save the newly fetched data into the appwrite db
     if (currentlyPlaying?.item.external_urls.spotify) {
@@ -89,6 +93,8 @@ export default function Manage() {
         trackCover: currentlyPlaying?.item.album.images[0].url,
         shouldSpotifyPlay: trackInfo.toggleSpotifyPlay,
         lyrics: JSON.stringify(lyrics),
+        duration: trackInfo.duration,
+        progress: trackInfo.progress,
       });
     }
   }, [currentlyPlaying, trackInfo.toggleSpotifyPlay, lyricsFile]);
@@ -119,6 +125,7 @@ export default function Manage() {
         });
 
         showLyrics(tokensh.item.id);
+
       } else {
         setIsSpotifyPlaying(false);
         trackInfo.setToggleSpotifyPlay(false);
@@ -155,6 +162,7 @@ export default function Manage() {
     }
   };
 
+  // function to fetch lyrics of the currently playing song
   const showLyrics = async (trackId: string) => {
     const url = `https://spotify23.p.rapidapi.com/track_lyrics/?id=${trackId}`;
     const options = {
