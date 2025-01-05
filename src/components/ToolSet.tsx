@@ -1,17 +1,24 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { Input } from './ui/input'
 import { useStatus } from '@/features/appState'
+import { Switch } from './ui/switch'
 
 export default function ToolSet(){
-  const {setTool, tool } = useStatus()
+  const {setTool, tool, toggleTool, setToggleTool } = useStatus()
+  
   const handleTool = (e:React.ChangeEvent<HTMLInputElement>)=> {
     setTool(e.target.value)
   }
+
+  const handleToggleTool = ()=>{
+    setToggleTool(!toggleTool)
+  }
   return (
     <div className='flex flex-col space-y-2'>
-        <div>
-            <span className='inline-block select-none hover:scale-110 cursor-pointer transition-all'>Tool</span>
+        <div className='flex space-x-2 items-center'>
+            <span id='tool' className='inline-block select-none hover:scale-110 cursor-pointer transition-all'>Tool</span>
+            <Switch checked={toggleTool} onCheckedChange={handleToggleTool} id="tool" />
         </div>
         <div><Input value={tool} onChange={(e)=> handleTool(e)} placeholder='e.g., VS Code' className='bg-[#010a15]'/></div>
     </div>

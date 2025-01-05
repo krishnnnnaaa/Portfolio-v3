@@ -18,13 +18,15 @@ export default function Status({
   tool,
   time,
   title,
-  workTool
+  workTool,
+  toggleTool
 }: {
   id: string;
   tool: string;
   time: string;
   title: string;
   workTool: string;
+  toggleTool: boolean;
 }) {
   const [clickCount, setClickCount] = useState(0);
   const [currentTime, setCurrentTime] = useState("04:35:04 PM");
@@ -146,8 +148,13 @@ export default function Status({
             </span>
             
             <div className="flex space-x-2 text-base md:text-xl items-baseline">
-              <span className="md:text-lg select-none">Tool: {tool}</span>
-              <span className="select-none">•</span>
+              {
+                toggleTool &&
+                <>
+                <span className="md:text-lg select-none">Tool: {tool}</span>
+                <span className="select-none">•</span>
+                </>
+              }
               <span className="text-cyan-600 select-none hover:scale-110 transition-all text-base">
                 {currentTime}
               </span>

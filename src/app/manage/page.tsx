@@ -20,7 +20,7 @@ import WorkspaceTool from "@/components/WorkspaceTool";
 export default function Manage() {
   const { toast } = useToast();
   const router = useRouter();
-  const { id, time, title, tool, trackInfo, workTool } = useStatus();
+  const { id, time, title, tool, trackInfo, workTool, toggleTool } = useStatus();
   const [lyricsFile, setlyricsFile] = useState<[LyricsLine]>([
     initialLyricsLine,
   ]);
@@ -35,7 +35,7 @@ export default function Manage() {
   const handleStatusEvent = () => {
     // handle status submit button and save the new data to the appwrite db
     setisSubmmited(true);
-    status.saveDocument({ id, time, title, tool, workTool });
+    status.saveDocument({ id, time, title, tool, workTool , toggleTool});
     setisSubmmited(false);
   };
 
@@ -221,7 +221,7 @@ export default function Manage() {
         <div className="flex justify-between space-y-8 md:space-x-0 md:flex-row flex-col w-full items-center md:items-end">
           <div>
             <span className="select-none">Preview</span>
-            <Status id={id} time={time} title={title} tool={tool} key={id} workTool={workTool} />
+            <Status id={id} time={time} title={title} tool={tool} key={id} workTool={workTool} toggleTool={toggleTool} />
           </div>
           {isSpotifyPlaying && inspectSpotify && currentlyPlaying != null ? (
             <div className="flex justify-center w-full md:w-auto">
