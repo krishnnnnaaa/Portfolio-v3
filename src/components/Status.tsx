@@ -155,7 +155,7 @@ export default function Status({
                 <span className="select-none">•</span>
                 </>
               }
-              <span className="text-cyan-600 select-none hover:scale-110 transition-all text-base">
+              <span className={`text-cyan-600 select-none ${toggleTool && "hover:scale-110"} transition-all text-base`}>
                 {currentTime}
               </span>
             </div>
