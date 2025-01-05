@@ -93,8 +93,8 @@ export default function Manage() {
         trackCover: currentlyPlaying?.item.album.images[0].url,
         shouldSpotifyPlay: trackInfo.toggleSpotifyPlay,
         lyrics: JSON.stringify(lyrics),
-        duration: trackInfo.duration,
-        progress: trackInfo.progress,
+        duration: currentlyPlaying?.item.duration_ms,
+        progress: currentlyPlaying?.progress_ms,
       });
     }
   }, [currentlyPlaying, trackInfo.toggleSpotifyPlay, lyricsFile]);
