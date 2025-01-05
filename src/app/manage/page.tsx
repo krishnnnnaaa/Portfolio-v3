@@ -101,6 +101,14 @@ export default function Manage() {
 
   // extract token and fetch Currently-playing-music on every render
   useEffect(() => {
+      fetchTrackUsingAccessToken();
+      // setInterval(() => {
+      //   fetchTrackUsingAccessToken();
+      // }, 60000);
+    }, []);
+  
+
+  const fetchTrackUsingAccessToken = async () => {
     const accessToken = extractAccessToken();
     if (accessToken != null) {
       fetchCurrentlyPlayingMusic(accessToken);
@@ -108,7 +116,7 @@ export default function Manage() {
       setCurrentlyPlaying(undefined);
       setIsSpotifyPlaying(false);
     }
-  }, []);
+  }
 
   // function to fetch Currently-playing-music
   const fetchCurrentlyPlayingMusic = async (accessToken: string) => {
@@ -116,6 +124,9 @@ export default function Manage() {
       const tokensh: any | undefined = await getCurrentlyPlayingSong(
         accessToken as string
       );
+      if(tokensh != currentlyPlaying){
+        // showLyrics(tokensh.item.id);
+      }
 
       if (tokensh != undefined) {
         setCurrentlyPlaying(tokensh);
@@ -124,7 +135,6 @@ export default function Manage() {
           description: "Spotify Play has been updated!",
         });
 
-        showLyrics(tokensh.item.id);
 
       } else {
         setIsSpotifyPlaying(false);

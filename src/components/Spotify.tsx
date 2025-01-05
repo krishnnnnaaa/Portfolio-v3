@@ -10,6 +10,7 @@ import spotifyPlay from "@/appwrite/spotify";
 import { useStatus } from "@/features/appState";
 import { TbMicrophone2 } from "react-icons/tb";
 import { useToast } from "@/hooks/use-toast";
+import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 
 const Spotify = ({
   img,
@@ -32,7 +33,7 @@ const Spotify = ({
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pathname = usePathname();
   const { trackInfo } = useStatus();
-  const [shouldSpotifyPlay, setShouldSpotifyPlay] = useState(false);
+  const [shouldSpotifyPlay, setShouldSpotifyPlay] = useState(true);
   const [startTime, setStartTime] = useState<number>(Date.now());
   const truncateTrack =
     track?.split("").slice(0, 20).join("") +
@@ -104,7 +105,7 @@ const Spotify = ({
   };
 
   return (
-    <div className="flex hover:scale-110 w-full md:w-[450px] transition-all select-none cursor-pointer justify-end flex-col border-2 border-green-500 bg-green-500 p-4 rounded-2xl">
+    <div className="flex hover:scale-110 w-full md:w-[450px] transition-all select-none cursor-pointer justify-end flex-col border-2 border-green-500 bg-green-500 p-4 rounded-2xl shadow-[12px_10px_15px_-6px_rgba(0,_0,_0,_1)]">
       <div className="flex relative right-0 items-center justify-between">
         <span>Currently Playing</span>
         {trackUrl && (
@@ -148,17 +149,16 @@ const Spotify = ({
               </div>
               <div className="text-xs md:text-sm flex w-full justify-between">
                 <div>
-
-              {/* if there is only one artist than render this */}
+              {/* if the list contains artists details with their names */}
                 {truncatedArtists[0]?.name
-                  ? truncatedArtists?.map((artist: any | undefined) => (
-                    <span className="mr-1" key={artist.id}>
-                        {artist.name}
+                  ? truncatedArtists?.map((artist: any | undefined, index: string) => (
+                    <span className="mr-1" key={index}>
+                        {artist?.name}
                       </span>
                     ))
                     :
                     truncatedArtists?.map((artist: any | undefined) => (
-                      // if there are more than one artist than render this 
+                      // if the list contains artists names only
                       <span className="mr-1" key={artist}>
                         {artist}
                       </span>
@@ -172,10 +172,20 @@ const Spotify = ({
                       size={30}
                       />  
                     }{
-                      pathname == "/" && trackInfo.trackLyrics.length == 1 &&<TbMicrophone2
-                      className="bg-[#181818c2] text-[#6d6d6d] cursor-none p-1.5 rounded-full"
+                      pathname == "/" && trackInfo.trackLyrics.length == 1 &&
+                      <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                      <TbMicrophone2
+                      className="bg-[#181818c2] text-[#6d6d6d] p-1.5 rounded-full"
                       size={30}
                       />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-gray-600 text-white p-2 rounded-lg border-none outline-none" >
+                          <p>Lyrics are unavailable at this moment.</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                     }
               </div>
             </div>
