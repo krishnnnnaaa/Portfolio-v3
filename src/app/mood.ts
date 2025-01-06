@@ -39,6 +39,21 @@ import bear from '../assets/activity/bear.avif'
 import chill3 from '../assets/activity/chill3.avif'
 import laptop2 from '../assets/activity/laptop2.avif'
 import mask2 from '../assets/activity/mask2.avif'
+import skull from '../assets/emotes/skull.webp'
+import cryinggiphy from '../assets/activity/cryinggiphy.webp';
+import sadgiphy from '../assets/activity/sadgiphy.webp';
+import sadgiphy2 from '../assets/activity/sadgiphy2.webp';
+import mice from '../assets/activity/mice.webp';
+import conflictgiphy from '../assets/activity/conflictgiphy.webp';
+import excitinggiphy from '../assets/activity/excitinggiphy.webp';
+import fastgiphy from '../assets/activity/fastgiphy.webp';
+import happygiphy from '../assets/activity/happygiphy.webp';
+import huffgiphy from '../assets/activity/huffgiphy.webp';
+import readygiphy from '../assets/activity/readygiphy.webp';
+import surprisedgiphy from '../assets/activity/surprisedgiphy.webp';
+import sleepygiphy from '../assets/activity/sleepygiphy.webp';
+import yaygiphy from '../assets/activity/yaygiphy.webp';
+import yoogiphy from '../assets/activity/yoogiphy.webp';
 
 export interface moodType{
     id: string,
@@ -197,5 +212,65 @@ export const mood:moodType[] = [
     {
         id: '38',
         image: mask2
+    },
+    {
+        id: '39',
+        image: skull
+    },
+    {
+        id: '40',
+        image: cryinggiphy
+    },
+    {
+        id: '41',
+        image: sadgiphy
+    },
+    {
+        id: '42',
+        image: sadgiphy2
+    },
+    {
+        id: '43',
+        image: mice
+    },
+    {
+        id: '44',
+        image: conflictgiphy
+    },
+    {
+        id: '45',
+        image: excitinggiphy
+    },
+    {
+        id: '46',
+        image: fastgiphy
+    },
+    {
+        id: '47',
+        image: happygiphy
+    },
+    {
+        id: '48',
+        image: huffgiphy
+    },
+    {
+        id: '49',
+        image: readygiphy
+    },
+    {
+        id: '50',
+        image: sleepygiphy
+    },
+    {
+        id: '51',
+        image: surprisedgiphy
+    },
+    {
+        id: '52',
+        image: yaygiphy
+    },
+    {
+        id: '53',
+        image: yoogiphy
     },
 ]

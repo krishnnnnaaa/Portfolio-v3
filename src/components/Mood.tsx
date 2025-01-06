@@ -21,7 +21,7 @@ export default function Mood(){
   return (
     <div className='flex flex-col border-2 border-cyan-600 p-4 rounded-2xl text-white'>
         <div className='mb-4 text-orange-300 select-none hover:scale-110 transition-all cursor-pointer'>Choose icon</div>
-        <div className='flex flex-wrap justify-center items-center'>
+        <div className='flex h-[400px] modal-container overflow-y-scroll flex-wrap justify-center items-center'>
           {
             loading && <Loader2Icon className='animate-spin'/>
           }
