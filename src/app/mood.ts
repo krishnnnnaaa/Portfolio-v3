@@ -54,6 +54,17 @@ import surprisedgiphy from '../assets/activity/surprisedgiphy.webp';
 import sleepygiphy from '../assets/activity/sleepygiphy.webp';
 import yaygiphy from '../assets/activity/yaygiphy.webp';
 import yoogiphy from '../assets/activity/yoogiphy.webp';
+import head from '../assets/activity/head.webp'
+import nervous from '../assets/activity/nervous.webp'
+import depressed from '../assets/activity/dudu-depressed.gif'
+import dudusad from '../assets/activity/dudu-sad.gif'
+import duduwearing from '../assets/activity/dudu-wearing-glasses-standing.gif'
+import dudu1 from '../assets/activity/dudu1.gif'
+import sleepydudu from '../assets/activity/sleepydudu.gif'
+import waitingforyou from '../assets/activity/waiting-for-you.gif'
+import sseeyall from '../assets/activity/sseeyall.gif'
+import bbg from '../assets/activity/cute-bbg.gif'
+import siii from '../assets/activity/siii.gif'
 
 export interface moodType{
     id: string,
@@ -273,4 +284,21 @@ export const mood:moodType[] = [
         id: '53',
         image: yoogiphy
     },
+    {
+        id: '54',
+        image: head
+    },
+    {
+        id: '55',
+        image: nervous
+    },
+    { id: '56', image: depressed },
+    { id: '57', image: dudusad },
+    { id: '58', image: duduwearing },
+    { id: '59', image: dudu1 },
+    { id: '60', image: sleepydudu },
+    { id: '61', image: waitingforyou },
+    { id: '62', image: sseeyall },
+    { id: '63', image: bbg },
+    { id: '64', image: siii },
 ]
