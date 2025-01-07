@@ -10,17 +10,26 @@ import {
 import { useStatus } from '@/features/appState'
 import Image from 'next/image'
 import {workspaceStack} from '../app/workspacetoolicons'
+import { Switch } from './ui/switch'
 
 const WorkspaceTool = () => {
-  const {setWorkTool, workTool } = useStatus()
+  const {setWorkTool, workTool, toggleIcon, setToggleIcon } = useStatus()
   
   const handleTool = (e:string)=> {
     setWorkTool(e)
   }
+
+  const handleToggleIcon = ()=>{
+    setToggleIcon(!toggleIcon)
+  }
   return (
     <div className='flex flex-col space-y-2'>
-        <div>
-            <span className='inline-block select-none hover:scale-110 cursor-pointer transition-all'>Workspace Tool/Emojis</span>
+        <div className='flex space-x-2 items-center'>
+
+          <label htmlFor="workspace-tool">
+            <span className='inline-block select-none hover:scale-110 cursor-pointer transition-all'>Icons / Emojis</span>
+          </label>
+            <Switch checked={toggleIcon} onCheckedChange={handleToggleIcon} id="workspace-tool" />
         </div>
         <div>
             <Select onValueChange={(e)=> handleTool(e)} defaultValue={workTool} >

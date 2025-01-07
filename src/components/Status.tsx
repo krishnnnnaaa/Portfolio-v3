@@ -19,7 +19,8 @@ export default function Status({
   time,
   title,
   workTool,
-  toggleTool
+  toggleTool,
+  toggleIcon
 }: {
   id: string;
   tool: string;
@@ -27,6 +28,7 @@ export default function Status({
   title: string;
   workTool: string;
   toggleTool: boolean;
+  toggleIcon: boolean;
 }) {
   const [clickCount, setClickCount] = useState(0);
   const [currentTime, setCurrentTime] = useState("04:35:04 PM");
@@ -107,7 +109,7 @@ export default function Status({
             width={80}
           />
           {
-            workspaceTool &&
+            toggleIcon && workspaceTool &&
             <TooltipProvider>
   <Tooltip>
     <TooltipTrigger>

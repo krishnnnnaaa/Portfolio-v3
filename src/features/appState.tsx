@@ -42,6 +42,8 @@ interface StatusType {
   setTime: React.Dispatch<React.SetStateAction<string>>;
   setTool: React.Dispatch<React.SetStateAction<string>>;
   setToggleTool: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleIcon: boolean;
+  setToggleIcon: React.Dispatch<React.SetStateAction<boolean>>;
   trackInfo: TrackInfo;
 }
 
@@ -101,7 +103,8 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
   const [tool, setTool] = useState('VS Code');
   const [workTool, setWorkTool] = useState('NextJS');
   const [toggleTool, setToggleTool] = useState(true)
-
+  const [toggleIcon, setToggleIcon] = useState(true)
+  
   // Track-related states
   const [track, setTrack] = useState<string | null>(null);
   const [album, setAlbum] = useState<string | null>(null);
@@ -157,7 +160,9 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
         workTool, 
         setWorkTool,
         toggleTool,
-        setToggleTool
+        setToggleTool,
+        toggleIcon,
+        setToggleIcon
       }}
     >
       {children}

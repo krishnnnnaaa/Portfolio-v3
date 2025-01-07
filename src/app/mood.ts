@@ -65,6 +65,10 @@ import waitingforyou from '../assets/activity/waiting-for-you.gif'
 import sseeyall from '../assets/activity/sseeyall.gif'
 import bbg from '../assets/activity/cute-bbg.gif'
 import siii from '../assets/activity/siii.gif'
+import animegirl from '../assets/activity/anime-girl.gif'
+import focused from '../assets/activity/focused.gif'
+import panic from '../assets/activity/panic.gif'
+import workgif from '../assets/activity/workgif.gif'
 
 export interface moodType{
     id: string,
@@ -301,4 +305,9 @@ export const mood:moodType[] = [
     { id: '62', image: sseeyall },
     { id: '63', image: bbg },
     { id: '64', image: siii },
+    { id: '65', image: animegirl },
+    { id: '66', image: focused },
+    { id: '67', image: panic },
+    { id: '68', image: workgif }
+    
 ]
