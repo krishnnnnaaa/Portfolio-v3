@@ -35,7 +35,8 @@ interface StatusType {
   time: string;
   tool: string;
   workTool: string;
-  toggleTool: boolean
+  toggleTool: boolean;
+  toggleTime: boolean;
   setWorkTool: React.Dispatch<React.SetStateAction<string>>;
   setId: React.Dispatch<React.SetStateAction<string>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
@@ -44,6 +45,7 @@ interface StatusType {
   setToggleTool: React.Dispatch<React.SetStateAction<boolean>>;
   toggleIcon: boolean;
   setToggleIcon: React.Dispatch<React.SetStateAction<boolean>>;
+  setToggleTime: React.Dispatch<React.SetStateAction<boolean>>;
   trackInfo: TrackInfo;
 }
 
@@ -104,6 +106,7 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
   const [workTool, setWorkTool] = useState('NextJS');
   const [toggleTool, setToggleTool] = useState(true)
   const [toggleIcon, setToggleIcon] = useState(true)
+  const [toggleTime, setToggleTime] = useState(true)
   
   // Track-related states
   const [track, setTrack] = useState<string | null>(null);
@@ -162,7 +165,9 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
         toggleTool,
         setToggleTool,
         toggleIcon,
-        setToggleIcon
+        setToggleIcon,
+        toggleTime,
+        setToggleTime
       }}
     >
       {children}

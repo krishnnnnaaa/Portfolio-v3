@@ -45,7 +45,9 @@ export default function Hero() {
     setToggleTool,
     workTool,
     toggleIcon,
-    setToggleIcon
+    setToggleIcon,
+    toggleTime,
+    setToggleTime
   } = useStatus();
 
   useEffect(() => {
@@ -60,6 +62,7 @@ export default function Hero() {
         setWorkTool(res?.workTool);
         setToggleTool(res?.toggleTool)
         setToggleIcon(res?.toggleIcon)
+        setToggleTime(res?.toggleTime)
       })
       .catch((error) => console.error("Error fetching status:", error));
 
@@ -113,6 +116,7 @@ export default function Hero() {
         setWorkTool(updatedStatusData.workTool);
         setToggleTool(updatedStatusData.toggleTool)
         setToggleIcon(updatedStatusData.toggleIcon)
+        setToggleTime(updatedStatusData.toggleTime)
       }
     })
 
@@ -127,13 +131,13 @@ export default function Hero() {
 
 
 
-  }, [setId, setTime, setTitle, setTool, setWorkTool, trackInfo, setToggleIcon]);
+  }, [setId, setTime, setTitle, setTool, setWorkTool, trackInfo, setToggleIcon, setToggleTime]);
 
   return (
     <div className="flex justify-between w-full md:w-[85%] md:flex-row flex-col pl-4 md:mx-auto items-start md:items-center md:mb-20 pt-8 md:mt-8">
       <div className="flex flex-col space-y-12">
         <Intro />
-        <Status id={id} time={time} title={title} tool={tool} workTool={workTool} toggleTool={toggleTool} toggleIcon={toggleIcon}/>
+        <Status id={id} time={time} title={title} tool={tool} workTool={workTool} toggleTool={toggleTool} toggleIcon={toggleIcon} toggleTime={toggleTime}/>
         <div className="w-[95%] md:w-[90%]">
           {trackInfo.toggleSpotifyPlay && (
             <Spotify

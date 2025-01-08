@@ -11,9 +11,9 @@ export class Status{
         this.databases = new Databases(this.client)
     }
 
-    async saveDocument({id, title, time, tool, workTool, toggleTool, toggleIcon}: {id:string, title:string, time:string, tool:string, workTool:string, toggleTool: boolean, toggleIcon: boolean}){
+    async saveDocument({id, title, time, tool, workTool, toggleTool, toggleIcon, toggleTime}: {id:string, title:string, time:string, tool:string, workTool:string, toggleTool: boolean, toggleIcon: boolean, toggleTime: boolean}){
         try {
-            return await this.databases.updateDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '', process.env.NEXT_PUBLIC_APPWRITE_STATUS_COLLECTION_ID || '', process.env.NEXT_PUBLIC_APPWRITE_STATUS_DOCUMENT_ID || '', {id, title, time, tool, workTool, toggleTool, toggleIcon})
+            return await this.databases.updateDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '', process.env.NEXT_PUBLIC_APPWRITE_STATUS_COLLECTION_ID || '', process.env.NEXT_PUBLIC_APPWRITE_STATUS_DOCUMENT_ID || '', {id, title, time, tool, workTool, toggleTool, toggleIcon, toggleTime})
         } catch (error) {
             if(error instanceof Error){
                 console.log(error);

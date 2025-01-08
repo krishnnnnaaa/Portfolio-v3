@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mood } from "@/app/mood";
 import { Loader2 } from "lucide-react";
-import spotify from '../assets/code/spotify.webp'
 import { workspaceStack } from "@/app/workspacetoolicons";
 import {
   Tooltip,
@@ -20,7 +19,8 @@ export default function Status({
   title,
   workTool,
   toggleTool,
-  toggleIcon
+  toggleIcon,
+  toggleTime
 }: {
   id: string;
   tool: string;
@@ -29,6 +29,7 @@ export default function Status({
   workTool: string;
   toggleTool: boolean;
   toggleIcon: boolean;
+  toggleTime: boolean;
 }) {
   const [clickCount, setClickCount] = useState(0);
   const [currentTime, setCurrentTime] = useState("04:35:04 PM");
@@ -98,7 +99,7 @@ export default function Status({
       <div className="text-2xl text-orange-300 select-none hover:scale-110 transition-all">
         Status
       </div>
-      <div className="flex space-x-4 md:ml-0 items-start">
+      <div className={`flex space-x-4 md:ml-0  items-center`}>
         <div>
           <Image
             src={item?.image as StaticImageData}
@@ -112,7 +113,7 @@ export default function Status({
             toggleIcon && workspaceTool &&
             <TooltipProvider>
   <Tooltip>
-    <TooltipTrigger>
+    <TooltipTrigger className="absolute">
   <Image src={workspaceTool?.image as StaticImageData} className="rounded-full hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/>
     </TooltipTrigger>
     <TooltipContent className="bg-gray-600 text-white p-2 rounded-lg border-none outline-none" >
@@ -135,6 +136,8 @@ export default function Status({
             >
               {title}
             </span>
+            {
+              toggleTime &&
             <span className="font-semibold text-base select-none">
               Elapsed: {elapsedTime.hours < 10 ? "0" : ""}
               {elapsedTime?.hours}
@@ -148,6 +151,7 @@ export default function Status({
               {elapsedTime?.minutes}{" "}
               <span className="md:inline-block hidden"> minutes</span>{" "}
             </span>
+}
             
             <div className="flex space-x-2 text-base md:text-xl items-baseline">
               {
