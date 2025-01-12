@@ -193,7 +193,7 @@ const Spotify = ({
                 {truncatedArtists[0]?.name
                   ? truncatedArtists?.map((artist: any | undefined, index: string) => (
                     <span className="mr-1" key={index}>
-                        {artist?.name}
+                        {artist.name}
                       </span>
                     ))
                     :
