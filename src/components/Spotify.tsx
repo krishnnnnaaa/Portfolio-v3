@@ -42,7 +42,7 @@ const Spotify = ({
   const truncateAlbum =
     album?.split("").slice(0, 15).join("") +
     (album?.split("").length > 15 ? "..." : "");
-    let truncatedArtists = artists?.map((artist: string) => artist?.length > 10 ? artist?.slice(0, 10) + "..." : artist)
+    let truncatedArtists = artists?.map((artist: string) => artist.length > 10 ? artist.slice(0, 10) + "..." : artist)
     truncatedArtists = truncatedArtists?.length > 2 ? truncatedArtists?.slice(0,2).concat("...") : truncatedArtists;
     
     useEffect(() => {
