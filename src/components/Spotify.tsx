@@ -1,14 +1,15 @@
 "use client";
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon, Repeat, Repeat1, Repeat1Icon, RepeatIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { BsSpotify } from "react-icons/bs";
 import { Switch } from "./ui/switch";
 import { usePathname } from "next/navigation";
-import spotifyPlay from "@/appwrite/spotify";
+import spotifyPlay, { SpotifyPlay } from "@/appwrite/spotify";
 import { useStatus } from "@/features/appState";
 import { TbMicrophone2 } from "react-icons/tb";
+import { FaRepeat } from "react-icons/fa6";
 import { useToast } from "@/hooks/use-toast";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 
@@ -41,7 +42,7 @@ const Spotify = ({
   const truncateAlbum =
     album?.split("").slice(0, 15).join("") +
     (album?.split("").length > 15 ? "..." : "");
-    let truncatedArtists = artists?.map((artist: string) => artist.length > 10 ? artist.slice(0, 10) + "..." : artist)
+    let truncatedArtists = artists?.map((artist: string) => artist?.length > 10 ? artist?.slice(0, 10) + "..." : artist)
     truncatedArtists = truncatedArtists?.length > 2 ? truncatedArtists?.slice(0,2).concat("...") : truncatedArtists;
     
     useEffect(() => {
@@ -51,8 +52,10 @@ const Spotify = ({
       
     }, []);
     useEffect(() => {
-      if(intervalRef.current) {
-        clearInterval(intervalRef.current);
+      if(trackInfo.onLoop){
+        if(intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
       }
       setStartTime(Date.now());
       updateProgressBar()
@@ -69,13 +72,35 @@ const Spotify = ({
       
       const updateProgressBar = ()=>{
     intervalRef.current = setInterval(() => {
-      const ElapsedTime = Date.now() - startTime;
-      const currentProgress = trackInfo.progress + ElapsedTime;
+      let ElapsedTime = Date.now() - startTime;
+      let currentProgress = trackInfo.progress + ElapsedTime;
       if(currentProgress >= trackInfo.duration){
-        clearInterval(intervalRef.current as ReturnType<typeof setInterval>);
-        intervalRef.current = null;
+        if(trackInfo.onLoop){
+          trackInfo.setProgress(0)     
+          setStartTime(Date.now())
+        }else{
+          clearInterval(intervalRef.current as ReturnType<typeof setInterval>);
+          intervalRef.current = null;
+        }
       }else{
         const progressPercentage = (currentProgress / trackInfo.duration) * 100;
+        const artists:any = trackInfo?.artists?.map((item: any) => item?.name);
+        // console.log(artists);
+        
+        spotifyPlay.saveSpotifyDocument({
+          track: trackInfo.track!,
+          artists: artists,
+          trackDate: trackInfo.trackDate!,
+          trackType: trackInfo.trackType!,
+          trackUrl: trackInfo.trackUrl!,
+          album: trackInfo.album!,
+          trackCover: trackInfo.trackImg!,
+          shouldSpotifyPlay: trackInfo.toggleSpotifyPlay!,
+          lyrics: JSON.stringify(trackInfo.trackLyrics),
+          duration: trackInfo.duration!,
+          progress: currentProgress!,
+          onLoop: trackInfo.onLoop
+        });
         const progress = document.getElementById('progress-bar')
         if(progress){
           progress.style.width = `${progressPercentage}%`;
@@ -107,7 +132,8 @@ const Spotify = ({
   return (
     <div className="flex hover:scale-110 w-full md:w-[450px] transition-all select-none cursor-pointer justify-end flex-col border-2 border-green-500 bg-green-500 p-4 rounded-2xl shadow-[12px_10px_15px_-6px_rgba(0,_0,_0,_1)]">
       <div className="flex relative right-0 items-center justify-between">
-        <span>Currently Playing</span>
+        <span>Currently Playing 
+          </span>
         {trackUrl && (
           <Link href={trackUrl} target="_blank">
             <span className="flex items-center">
@@ -132,12 +158,26 @@ const Spotify = ({
               <div className="spot"></div>
             </div>
             <div className="w-full flex flex-col">
-              <div className="overflow-hidden relative whitespace-nowrap ">
+              <div className="overflow-hidden flex space-x-2 relative whitespace-nowrap ">
               <Link href={trackUrl} target="_blank">
                 <span className="inline-block hover:underline text-base md:text-xl">
                   {truncateTrack}
                 </span>
           </Link>
+                  {
+            pathname == '/manage' ? (
+              <div>
+                {
+                  trackInfo.onLoop ? <span className="text-[10px] font-semibold bg-[#1f2937] text-white px-2 py-1 rounded-md" onClick={()=> {trackInfo.setOnLoop(false); console.log('off')}}>on loop</span> : 
+                <span  onClick={()=> {trackInfo.setOnLoop(true)}} className="text-[10px] font-semibold px-2 py-1 rounded-md border-2 border-[#1f2937] text-[#1f2937]">on loop</span>
+                }
+              </div>
+            ) : <div>
+              {
+                  trackInfo.onLoop && <span className="text-[10px] flex items-center font-semibold bg-[#1f2937] text-white px-2 py-1 rounded-md">on loop <FaRepeat className="inline-block mx-0.5" /></span>
+                }
+            </div>
+          }
               </div>
               <div className="md:text-base text-xs">
                 <span className="md:inline-block hidden bg-gray-800 p-1 rounded-md">{trackType}</span>

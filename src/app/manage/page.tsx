@@ -79,6 +79,7 @@ export default function Manage() {
       const artists = currentlyPlaying?.item.album.artists.map(
         (item: { name: string }) => item.name
       );
+      
 
       // fetch lyrics from given response
       const lyrics = lyricsFile.map((item: { words: string }) => item.words);
@@ -95,9 +96,10 @@ export default function Manage() {
         lyrics: JSON.stringify(lyrics),
         duration: currentlyPlaying?.item.duration_ms,
         progress: currentlyPlaying?.progress_ms,
+        onLoop: trackInfo.onLoop
       });
     }
-  }, [currentlyPlaying, trackInfo.toggleSpotifyPlay, lyricsFile]);
+  }, [currentlyPlaying, trackInfo.toggleSpotifyPlay, lyricsFile, trackInfo.onLoop]);
 
   // extract token and fetch Currently-playing-music on every render
   useEffect(() => {

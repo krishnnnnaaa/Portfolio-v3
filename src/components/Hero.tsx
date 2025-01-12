@@ -27,6 +27,7 @@ export interface SpotifyDocumentType {
   shouldSpotifyPlay: boolean;
   duration: number;
   progress: number;
+  onLoop: boolean;
 }
 
 export default function Hero() {
@@ -81,6 +82,7 @@ export default function Hero() {
           trackInfo.setTrackLyrics(JSON.parse(res.lyrics));
           trackInfo.setDuration(res.duration);
           trackInfo.setProgress(res.progress);
+          trackInfo.setOnLoop(res.onLoop)
         }
       })
       .catch((error) => console.error("Error fetching Spotify document:", error));
@@ -102,6 +104,7 @@ export default function Hero() {
         trackInfo.setTrackLyrics(JSON.parse(updatedSpotifyData.lyrics));
         trackInfo.setDuration(updatedSpotifyData.duration);
         trackInfo.setProgress(updatedSpotifyData.progress)
+        trackInfo.setOnLoop(updatedSpotifyData.onLoop)
       }
     });
 

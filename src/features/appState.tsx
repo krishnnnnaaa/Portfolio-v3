@@ -27,6 +27,8 @@ interface TrackInfo {
   setDuration: React.Dispatch<React.SetStateAction<number>>;
   progress: number;
   setProgress: React.Dispatch<React.SetStateAction<number>>;
+  onLoop: boolean;
+  setOnLoop: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface StatusType {
@@ -121,6 +123,7 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
   const [trackLyrics, setTrackLyrics] = useState<[string]>(['']);
   const [duration, setDuration] = useState<number>(0)
   const [progress, setProgress] = useState<number>(0)
+  const [onLoop, setOnLoop] = useState<boolean>(true)
   const trackInfo: TrackInfo = {
     track,
     setTrack,
@@ -145,7 +148,9 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
     duration,
     setDuration,
     progress,
-    setProgress
+    setProgress,
+    onLoop,
+    setOnLoop
   };
 
   return (
