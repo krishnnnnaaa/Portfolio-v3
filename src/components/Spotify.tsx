@@ -1,12 +1,11 @@
 "use client";
-import { Loader2Icon, Repeat, Repeat1, Repeat1Icon, RepeatIcon } from "lucide-react";
+import { Loader2Icon} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { BsSpotify } from "react-icons/bs";
 import { Switch } from "./ui/switch";
 import { usePathname } from "next/navigation";
-import spotifyPlay, { SpotifyPlay } from "@/appwrite/spotify";
 import { useStatus } from "@/features/appState";
 import { TbMicrophone2 } from "react-icons/tb";
 import { FaRepeat } from "react-icons/fa6";
@@ -31,97 +30,19 @@ const Spotify = ({
   trackUrl: string;
 }) => {
   const { toast } = useToast();
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pathname = usePathname();
   const { trackInfo } = useStatus();
-  const [shouldSpotifyPlay, setShouldSpotifyPlay] = useState(true);
-  const [startTime, setStartTime] = useState<number>(Date.now());
   const truncateTrack =
     track?.split("").slice(0, 20).join("") +
     (track?.split("").length > 20 ? "..." : "");
-  const truncateAlbum =
-    album?.split("").slice(0, 15).join("") +
-    (album?.split("").length > 15 ? "..." : "");
+
+  const truncateAlbum = album?.split("").slice(0, 15).join("") + (album?.split("").length > 15 ? "..." : "");
     let truncatedArtists = artists?.map((artist: string) => artist?.length > 10 ? artist?.slice(0, 10) + "..." : artist)
     truncatedArtists = truncatedArtists?.length > 2 ? truncatedArtists?.slice(0,2).concat("...") : truncatedArtists;
-    
-    useEffect(() => {
-      spotifyPlay
-      .getSpotifyDoc()
-      // setStartTime(Date.now());
-      
-    }, []);
-    useEffect(() => {
-      if(trackInfo.onLoop){
-        if(intervalRef.current) {
-          // console.log(trackInfo.progress);
-          
-        //   spotifyPlay.saveSpotifyDocument({
-        //   track: trackInfo.track!,
-        //   artists: trackInfo.artists!,
-        //   trackDate: trackInfo.trackDate!,
-        //   trackType: trackInfo.trackType!,
-        //   trackUrl: trackInfo.trackUrl!,
-        //   album: trackInfo.album!,
-        //   trackCover: trackInfo.trackImg!,
-        //   shouldSpotifyPlay: trackInfo.toggleSpotifyPlay,
-        //   lyrics: JSON.stringify(trackInfo.trackLyrics),
-        //   duration: trackInfo.duration!,
-        //   progress: trackInfo.progress!,
-        //   onLoop: trackInfo.onLoop
-        // });
-          
-          clearInterval(intervalRef.current);
-        }
-      }
-      setStartTime(Date.now());
-      updateProgressBar()
-
-        return () => {
-          // Cleanup on component unmount or before the next effect runs
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-          }
-        };
-        
-      }, [trackInfo.progress]);
-      
-      
-      const updateProgressBar = ()=>{
-    intervalRef.current = setInterval(() => {
-      let ElapsedTime = Date.now() - startTime;
-      let currentProgress = trackInfo.progress + ElapsedTime;
-      trackInfo.setProgress((prev) => prev + ElapsedTime)
-      // console.log(currentProgress);
-      
-      if(currentProgress >= trackInfo.duration){
-        if(trackInfo.onLoop){
-          trackInfo.setProgress(0)     
-          setStartTime(Date.now())
-        }else{
-          clearInterval(intervalRef.current as ReturnType<typeof setInterval>);
-          intervalRef.current = null;
-        }
-      }else{
-        const progressPercentage = (currentProgress / trackInfo.duration) * 100;
-        // console.log(trackInfo.toggleSpotifyPlay);
-        const progress = document.getElementById('progress-bar')
-        if(progress){
-          progress.style.width = `${progressPercentage}%`;
-        }
-      }
-      return currentProgress;
-        
-      }, 1000);
-      }
-
-
 
 
   const handleSpotifyPlay = () => {
-    // setShouldSpotifyPlay(!shouldSpotifyPlay);
     trackInfo.setToggleSpotifyPlay(!trackInfo.toggleSpotifyPlay);
-    // console.log("1: ", shouldSpotifyPlay, ";", "2: ", trackInfo.toggleSpotifyPlay);
     
     
     if (trackInfo.toggleSpotifyPlay) {
@@ -198,8 +119,8 @@ const Spotify = ({
                 <div>
               {/* if the list contains artists details with their names */}
                 {truncatedArtists[0]?.name
-                  ? truncatedArtists?.map((artist: any | undefined) => (
-                    <span className="mr-1" key={artist.name}>
+                  ? truncatedArtists?.map((artist: any | undefined, index: number) => (
+                    <span className="mr-1" key={index}>
                         {artist.name}
                       </span>
                     ))
@@ -243,7 +164,7 @@ const Spotify = ({
             onCheckedChange={handleSpotifyPlay}
             />
           )}
-          <div id="progress-bar" className="h-1 relative -bottom-[1.2rem] self-baseline flex  bg-gray-800"></div>
+          {/* <div id="progress-bar" className="h-1 relative -bottom-[1.2rem] self-baseline flex  bg-gray-800"></div> */}
         </div>
       ) : (
         <span className="inline-block my-4">

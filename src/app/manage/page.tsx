@@ -28,13 +28,13 @@ export default function Manage() {
   const [isSpotifyPlaying, setIsSpotifyPlaying] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<undefined | any>();
   const [isSubmmited, setisSubmmited] = useState(false);
-  // console.log(trackInfo);
   
 
 
   const handleStatusEvent = () => {
     // handle status submit button and save the new data to the appwrite db
     setisSubmmited(true);
+    
     status.saveDocument({ id, time, title, tool, workTool , toggleTool, toggleIcon, toggleTime});
     setisSubmmited(false);
   };
@@ -71,8 +71,7 @@ export default function Manage() {
     trackInfo.setTrackImg(currentlyPlaying?.item.album.images[0].url);
     trackInfo.setTrackType(currentlyPlaying?.currently_playing_type);
     trackInfo.setTrackUrl(currentlyPlaying?.item.external_urls.spotify);
-    trackInfo.setDuration(currentlyPlaying?.item.duration_ms);
-    trackInfo.setProgress(currentlyPlaying?.progress_ms);
+
 
     // save the newly fetched data into the appwrite db
     if (currentlyPlaying?.item.external_urls.spotify) {
@@ -94,12 +93,12 @@ export default function Manage() {
         trackCover: currentlyPlaying?.item.album.images[0].url,
         shouldSpotifyPlay: trackInfo.toggleSpotifyPlay,
         lyrics: JSON.stringify(lyrics),
-        duration: currentlyPlaying?.item.duration_ms,
-        progress: currentlyPlaying?.progress_ms,
         onLoop: trackInfo.onLoop
       });
     }
   }, [currentlyPlaying, trackInfo.toggleSpotifyPlay, lyricsFile, trackInfo.onLoop]);
+
+  
 
   // extract token and fetch Currently-playing-music on every render
   useEffect(() => {

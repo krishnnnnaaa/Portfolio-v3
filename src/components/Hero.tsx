@@ -25,8 +25,6 @@ export interface SpotifyDocumentType {
   trackUrl: string;
   lyrics: string;
   shouldSpotifyPlay: boolean;
-  duration: number;
-  progress: number;
   onLoop: boolean;
 }
 
@@ -80,8 +78,6 @@ export default function Hero() {
           trackInfo.setAlbum(res.album);
           trackInfo.setToggleSpotifyPlay(res.shouldSpotifyPlay);
           trackInfo.setTrackLyrics(JSON.parse(res.lyrics));
-          trackInfo.setDuration(res.duration);
-          trackInfo.setProgress(res.progress);
           trackInfo.setOnLoop(res.onLoop)
         }
       })
@@ -102,8 +98,6 @@ export default function Hero() {
         trackInfo.setAlbum(updatedSpotifyData.album);
         trackInfo.setToggleSpotifyPlay(updatedSpotifyData.shouldSpotifyPlay);
         trackInfo.setTrackLyrics(JSON.parse(updatedSpotifyData.lyrics));
-        trackInfo.setDuration(updatedSpotifyData.duration);
-        trackInfo.setProgress(updatedSpotifyData.progress)
         trackInfo.setOnLoop(updatedSpotifyData.onLoop)
       }
     });
@@ -124,7 +118,6 @@ export default function Hero() {
     })
 
 
-
     // Cleanup on component unmount
     return () => {
       if (unsubscribeSpotify) unsubscribeSpotify();
@@ -132,7 +125,7 @@ export default function Hero() {
     };
 
 
-
+    
 
   }, [setId, setTime, setTitle, setTool, setWorkTool, trackInfo, setToggleIcon, setToggleTime]);
 

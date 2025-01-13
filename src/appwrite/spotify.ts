@@ -12,13 +12,22 @@ export class SpotifyPlay{
         this.databases = new Databases(this.client)
     }
 
-    async saveSpotifyDocument({track, artists, trackDate, trackType, trackUrl, album, lyrics, trackCover, shouldSpotifyPlay, duration, progress, onLoop}: {track:string, artists:string[], lyrics: string, trackDate:string, trackType:string, trackUrl:string, album:string, trackCover:string, shouldSpotifyPlay?: boolean, duration: number, progress: number, onLoop: boolean}){
+    async saveSpotifyDocument({track, artists, trackDate, trackType, trackUrl, album, lyrics, trackCover, shouldSpotifyPlay, onLoop}: {track:string, artists:string[], lyrics: string, trackDate:string, trackType:string, trackUrl:string, album:string, trackCover:string, shouldSpotifyPlay?: boolean, onLoop: boolean}){
         try {
-            return await this.databases.updateDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_COLLECTION_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_DOCUMENT_ID || '', {track, artists, trackDate, trackType, trackUrl, album, lyrics, trackCover, shouldSpotifyPlay, duration, progress, onLoop})
+            return await this.databases.updateDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_COLLECTION_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_DOCUMENT_ID || '', {track, artists, trackDate, trackType, trackUrl, album, lyrics, trackCover, shouldSpotifyPlay, onLoop})
         } catch (error) {
             if(error instanceof Error){
                 console.log(error);
                 
+            }
+        }
+    }
+    async updateOnLoopSpotify({progress}: {progress: number}){
+        try {
+            return await this.databases.updateDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_COLLECTION_ID || '', process.env.NEXT_PUBLIC_APPWRITE_SPOTIFY_DOCUMENT_ID || '', {progress})
+        } catch (error) {
+            if(error instanceof Error){
+                console.log(error);  
             }
         }
     }
