@@ -69,6 +69,10 @@ import animegirl from '../assets/activity/anime-girl.gif'
 import focused from '../assets/activity/focused.gif'
 import panic from '../assets/activity/panic.gif'
 import workgif from '../assets/activity/workgif.gif'
+import aether from '../assets/activity/aether.jpg'
+import aether2 from '../assets/activity/aether2.jpg'
+import aether3 from '../assets/activity/aether3.jpg'
+import aether4 from '../assets/activity/aether4.jpg'
 
 export interface moodType{
     id: string,
@@ -308,6 +312,10 @@ export const mood:moodType[] = [
     { id: '65', image: animegirl },
     { id: '66', image: focused },
     { id: '67', image: panic },
-    { id: '68', image: workgif }
+    { id: '68', image: workgif },
+    {id: '69', image: aether},
+    {id: '70', image: aether2},
+    {id: '71', image: aether3},
+    {id: '72', image: aether4},
     
 ]
