@@ -32,6 +32,16 @@ export class Status{
         }
     }
 
+    async addNote({note, noteExpiryDate}: {note:string | null, noteExpiryDate: string | null}){
+        try {
+            return await this.databases.updateDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '', process.env.NEXT_PUBLIC_APPWRITE_STATUS_COLLECTION_ID || '', process.env.NEXT_PUBLIC_APPWRITE_STATUS_DOCUMENT_ID || '', {note, noteExpiryDate})
+        } catch (error) {
+            if(error instanceof Error){
+                console.log(error);  
+            }
+        }
+    }
+
     getRealtimeStatusDoc(callback: (data: any) => void) {
         try {
             const channel = `databases.${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}.collections.${process.env.NEXT_PUBLIC_APPWRITE_STATUS_COLLECTION_ID}.documents.${process.env.NEXT_PUBLIC_APPWRITE_STATUS_DOCUMENT_ID}`;

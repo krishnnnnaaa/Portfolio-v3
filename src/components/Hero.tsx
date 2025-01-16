@@ -8,6 +8,8 @@ import { useStatus } from "@/features/appState";
 import Spotify from "./Spotify";
 import spotifyPlay from "@/appwrite/spotify";
 import LyricPopover from "./LyricPopover";
+import Password from "./Password";
+import Message from "./Message";
 
 export interface SpotifyDocumentType {
   $collectionId: string;
@@ -46,8 +48,13 @@ export default function Hero() {
     toggleIcon,
     setToggleIcon,
     toggleTime,
-    setToggleTime
+    setToggleTime,
+    note,
+    setNote,
+    togglePassword,
+    shouldNoteAppear
   } = useStatus();
+  const [noteExpiry, setNoteExpiry] = useState('')
 
   useEffect(() => {
     // Fetch initial data for status and Spotify document
@@ -62,6 +69,9 @@ export default function Hero() {
         setToggleTool(res?.toggleTool)
         setToggleIcon(res?.toggleIcon)
         setToggleTime(res?.toggleTime)
+        setNote(res?.note);
+        setNoteExpiry(res?.noteExpiryDate)
+        
       })
       .catch((error) => console.error("Error fetching status:", error));
 
@@ -114,6 +124,8 @@ export default function Hero() {
         setToggleTool(updatedStatusData.toggleTool)
         setToggleIcon(updatedStatusData.toggleIcon)
         setToggleTime(updatedStatusData.toggleTime)
+        setNote(updatedStatusData.note)
+        setNoteExpiry(updatedStatusData.noteExpiryDate)
       }
     })
 
@@ -129,11 +141,21 @@ export default function Hero() {
 
   }, [setId, setTime, setTitle, setTool, setWorkTool, trackInfo, setToggleIcon, setToggleTime]);
 
+  useEffect(() => {
+    if(noteExpiry){
+      if(new Date(noteExpiry) < new Date()){      
+        setNote(null)            
+        status.addNote({note: null, noteExpiryDate: null})
+      }
+    }
+  }, [note, noteExpiry])
+  
+
   return (
     <div className="flex justify-between w-full md:w-[85%] md:flex-row flex-col pl-4 md:mx-auto items-start md:items-center md:mb-20 pt-8 md:mt-8">
       <div className="flex flex-col space-y-12">
         <Intro />
-        <Status id={id} time={time} title={title} tool={tool} workTool={workTool} toggleTool={toggleTool} toggleIcon={toggleIcon} toggleTime={toggleTime}/>
+        <Status id={id} time={time} title={title} tool={tool} workTool={workTool} toggleTool={toggleTool} toggleIcon={toggleIcon} toggleTime={toggleTime} note={note as string}/>
         <div className="w-[95%] md:w-[90%]">
           {trackInfo.toggleSpotifyPlay && (
             <Spotify
@@ -148,6 +170,8 @@ export default function Hero() {
             />
           )}
           {trackInfo.toggleLyrics && <LyricPopover lyrics={trackInfo.trackLyrics} />}
+          {togglePassword && <Password/>}
+      {shouldNoteAppear && <Message/>}
         </div>
       </div>
       <div className="md:w-auto w-full">

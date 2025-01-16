@@ -33,16 +33,22 @@ interface StatusType {
   time: string;
   tool: string;
   workTool: string;
+  note: string | null;
   toggleTool: boolean;
   toggleTime: boolean;
+  togglePassword: boolean;
   setWorkTool: React.Dispatch<React.SetStateAction<string>>;
+  setNote: React.Dispatch<React.SetStateAction<string | null>>;
   setId: React.Dispatch<React.SetStateAction<string>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setTime: React.Dispatch<React.SetStateAction<string>>;
   setTool: React.Dispatch<React.SetStateAction<string>>;
   setToggleTool: React.Dispatch<React.SetStateAction<boolean>>;
+  setTogglePassword: React.Dispatch<React.SetStateAction<boolean>>;
   toggleIcon: boolean;
   setToggleIcon: React.Dispatch<React.SetStateAction<boolean>>;
+  shouldNoteAppear: boolean;
+  setShouldNoteAppear: React.Dispatch<React.SetStateAction<boolean>>;
   setToggleTime: React.Dispatch<React.SetStateAction<boolean>>;
   trackInfo: TrackInfo;
 }
@@ -105,6 +111,9 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
   const [toggleTool, setToggleTool] = useState(true)
   const [toggleIcon, setToggleIcon] = useState(true)
   const [toggleTime, setToggleTime] = useState(true)
+  const [togglePassword, setTogglePassword] = useState(false)
+  const [note, setNote] = useState<string | null>('')
+  const [shouldNoteAppear, setShouldNoteAppear] = useState(false)
   
   // Track-related states
   const [track, setTrack] = useState<string | null>(null);
@@ -164,7 +173,13 @@ export const StatusProvider = ({ children }: { children: React.ReactNode }) => {
         toggleIcon,
         setToggleIcon,
         toggleTime,
-        setToggleTime
+        setToggleTime,
+        setShouldNoteAppear,
+        shouldNoteAppear,
+        note,
+        setNote,
+        setTogglePassword,
+        togglePassword
       }}
     >
       {children}

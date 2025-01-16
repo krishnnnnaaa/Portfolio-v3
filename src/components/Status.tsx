@@ -3,7 +3,7 @@ import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mood } from "@/app/mood";
-import { Loader2 } from "lucide-react";
+import { Loader2, Mail, MessageSquareDotIcon } from "lucide-react";
 import { workspaceStack } from "@/app/workspacetoolicons";
 import {
   Tooltip,
@@ -11,6 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useStatus } from "@/features/appState";
 
 export default function Status({
   id,
@@ -20,7 +21,8 @@ export default function Status({
   workTool,
   toggleTool,
   toggleIcon,
-  toggleTime
+  toggleTime,
+  note
 }: {
   id: string;
   tool: string;
@@ -30,8 +32,10 @@ export default function Status({
   toggleTool: boolean;
   toggleIcon: boolean;
   toggleTime: boolean;
+  note?: string;
 }) {
   const [clickCount, setClickCount] = useState(0);
+  const {setTogglePassword} = useStatus()
   const [currentTime, setCurrentTime] = useState("04:35:04 PM");
   const [elapsedTime, setElapsedTime] = useState<{
     hours: number;
@@ -114,7 +118,7 @@ export default function Status({
             <TooltipProvider>
   <Tooltip>
     <TooltipTrigger className="absolute">
-  <Image src={workspaceTool?.image as StaticImageData} className="rounded-full hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/>
+  <Image src={workspaceTool?.image as StaticImageData} className="rounded-full z-10 hover:scale-110 transition-all bg-[#010a15] relative -top-5 left-[62px] p-1.5" alt="img" height={35} width={35}/>
     </TooltipTrigger>
     <TooltipContent className="bg-gray-600 text-white p-2 rounded-lg border-none outline-none" >
       <p>{workspaceTool.name}</p>
@@ -130,11 +134,25 @@ export default function Status({
         ) : (
           <div className="flex flex-col text-white w-[220px] md:w-[250px] overflow-hidden whitespace-nowrap">
             <span
-              className={`text-base md:text-xl text-fuchsia-600 font-semibold w-fit select-none transition-all ${
+              className={`text-base md:text-xl text-fuchsia-600 flex items-center font-semibold w-fit select-none transition-all ${
                 title.length > 25 ? "animate-scroll" : ""
               }`}
             >
               {title}
+              {
+                note != null && (
+                  <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                    <Mail onClick={()=> setTogglePassword(true)} className="text-white relative z-[10] mx-2 hover:scale-110 cursor-pointer transition-all" size={20}/>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-gray-600 text-white p-2 rounded-lg border-none outline-none" >
+                      <p>Secret note</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                )
+              } 
             </span>
             {
               toggleTime &&

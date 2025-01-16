@@ -10,17 +10,28 @@ import React, { useEffect, useState } from "react";
 import ToolSet from "@/components/ToolSet";
 import { initialLyricsLine, LyricsLine, useStatus } from "@/features/appState";
 import status from "@/appwrite/status";
-import { AlertTriangle, LoaderCircle } from "lucide-react";
+import { AlertTriangle, LoaderCircle, MoreVerticalIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Spotify from "@/components/Spotify";
 import spotifyPlay from "@/appwrite/spotify";
 import { useToast } from "@/hooks/use-toast";
 import WorkspaceTool from "@/components/WorkspaceTool";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import Password from "@/components/Password";
+import Note from "@/components/Note";
+
 
 export default function Manage() {
   const { toast } = useToast();
   const router = useRouter();
-  const { id, time, title, tool, trackInfo, workTool, toggleTool, toggleIcon, toggleTime } = useStatus();
+  const { id, time, title, tool, trackInfo, workTool, toggleTool, toggleIcon, toggleTime, setShouldNoteAppear, shouldNoteAppear, setTogglePassword, togglePassword } = useStatus();
   const [lyricsFile, setlyricsFile] = useState<[LyricsLine]>([
     initialLyricsLine,
   ]);
@@ -29,14 +40,21 @@ export default function Manage() {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<undefined | any>();
   const [isSubmmited, setisSubmmited] = useState(false);
   
+  
 
 
   const handleStatusEvent = () => {
     // handle status submit button and save the new data to the appwrite db
-    setisSubmmited(true);
-    
-    status.saveDocument({ id, time, title, tool, workTool , toggleTool, toggleIcon, toggleTime});
-    setisSubmmited(false);
+    try {
+      setisSubmmited(true);
+      status.saveDocument({ id, time, title, tool, workTool , toggleTool, toggleIcon, toggleTime});
+    } catch (error) {
+      if(error instanceof Error){
+        console.log(error);
+      }
+    }finally{
+      setisSubmmited(false);
+    }
   };
 
   // function to extract access_token from browser url and save it to the localstorage for future use
@@ -262,10 +280,11 @@ export default function Manage() {
             <WorkspaceTool/>
             <Time />
           </div>
+          <div className="w-full flex items-center space-x-2">
           <Button
             onClick={handleStatusEvent}
             disabled={isSubmmited}
-            className="bg-fuchsia-600 hover:bg-fuchsia-800"
+            className="bg-fuchsia-600 hover:bg-fuchsia-800 w-full"
           >
             {isSubmmited ? (
               <LoaderCircle className="animate-spin" />
@@ -273,6 +292,13 @@ export default function Manage() {
               "Save changes"
             )}
           </Button>
+          <DropdownMenu>
+  <DropdownMenuTrigger><MoreVerticalIcon className="bg-white text-black py-2 rounded-md" size={40}/></DropdownMenuTrigger>
+  <DropdownMenuContent className="bg-[#1f2937] border-[#1f2937] text-white">
+    <DropdownMenuLabel onClick={()=> setTogglePassword(true)} className="cursor-pointer">Add a secret note</DropdownMenuLabel>
+  </DropdownMenuContent>
+</DropdownMenu>
+          </div>
           <Button
             onClick={handleAuth}
             className="my-4 bg-green-500 hover:bg-green-600"
@@ -284,6 +310,8 @@ export default function Manage() {
           </Button>
         </div>
       </div>
+      {togglePassword && <Password/>}
+      {shouldNoteAppear && <Note/>}
     </div>
   );
 }
