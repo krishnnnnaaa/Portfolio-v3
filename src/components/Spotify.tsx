@@ -2,7 +2,7 @@
 import { Loader2Icon} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsSpotify } from "react-icons/bs";
 import { Switch } from "./ui/switch";
 import { usePathname } from "next/navigation";
@@ -32,9 +32,24 @@ const Spotify = ({
   const { toast } = useToast();
   const pathname = usePathname();
   const { trackInfo } = useStatus();
-  const truncateTrack =
-    track?.split("").slice(0, 20).join("") +
-    (track?.split("").length > 20 ? "..." : "");
+  const [trunckatedTrack, setTrunckatedTrack] = useState<string>('')
+
+  useEffect(() => {
+    const truncate = (text: string, maxLength: number) => {
+      return text?.length > maxLength 
+        ? text.slice(0, maxLength) + "..." 
+        : text;
+    };
+  
+    const maxLength = window?.screen?.width < 400 
+      ? trackInfo.onLoop 
+        ? 10 
+        : 20 
+      : 20;
+      
+      const truncatedTrack = truncate(track, maxLength);
+    setTrunckatedTrack(truncatedTrack);
+  }, [trackInfo.onLoop, track]);
 
   const truncateAlbum = album?.split("").slice(0, 15).join("") + (album?.split("").length > 15 ? "..." : "");
     let truncatedArtists = artists?.map((artist: string) => artist?.length > 10 ? artist?.slice(0, 10) + "..." : artist)
@@ -89,7 +104,7 @@ const Spotify = ({
               <div className="overflow-hidden flex space-x-2 relative whitespace-nowrap ">
               <Link href={trackUrl} target="_blank">
                 <span className="inline-block hover:underline text-base md:text-xl">
-                  {truncateTrack}
+                  {trunckatedTrack}
                 </span>
           </Link>
                   {

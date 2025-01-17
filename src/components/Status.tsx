@@ -3,7 +3,7 @@ import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mood } from "@/app/mood";
-import { Loader2, Mail, MessageSquareDotIcon } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 import { workspaceStack } from "@/app/workspacetoolicons";
 import {
   Tooltip,

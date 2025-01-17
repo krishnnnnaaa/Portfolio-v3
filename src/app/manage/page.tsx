@@ -146,7 +146,8 @@ export default function Manage() {
       if(tokensh != currentlyPlaying){
         // showLyrics(tokensh.item.id);
       }
-
+      console.log(tokensh);
+      
       if (tokensh != undefined) {
         setCurrentlyPlaying(tokensh);
         setIsSpotifyPlaying(true);
