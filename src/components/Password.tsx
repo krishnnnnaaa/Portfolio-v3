@@ -24,7 +24,7 @@ const Password = () => {
           return;
         }
 
-        const isPasswordValid = password === '2808';
+        const isPasswordValid = password === process.env.NEXT_PUBLIC_PROCESS_KEY;
 
         if(isPasswordValid){
           setTogglePassword(false)
